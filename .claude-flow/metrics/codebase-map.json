@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-08-07T13:54:29.643Z",
+  "projectRoot": "C:\\Users\\zexc\\Desktop\\T",
+  "structure": {
+    "hasPackageJson": false,
+    "hasTsConfig": false,
+    "hasClaudeConfig": true,
+    "hasClaudeFlow": true
+  },
+  "scannedAt": 1786110869644
+}

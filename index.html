@@ -1,0 +1,2490 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MERIDIAN — Heirloom Full-Grain Leatherware</title>
+  <meta name="description" content="Hand-stitched full-grain French calfskin leather wallet. An object of permanence.">
+
+  <!-- Premium Editorial Google Fonts: Instrument Serif, Bodoni Moda & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lenis CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+
+  <style>
+    :root {
+      --bg-dark: #0b0a09;
+      --bg-surface: #141311;
+      --bg-card: #1a1816;
+      --text-cream: #f6f3eb;
+      --text-muted: #9e998e;
+      --accent-cognac: #a86538;
+      --accent-gold: #c59b27;
+      --accent-gold-glow: rgba(197, 155, 39, 0.25);
+      --border-subtle: rgba(246, 243, 235, 0.08);
+      --border-gold: rgba(197, 155, 39, 0.35);
+      
+      --font-serif-hero: 'Instrument Serif', 'Bodoni Moda', Georgia, serif;
+      --font-serif-display: 'Bodoni Moda', 'Instrument Serif', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    /* Reset & Base Styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-dark);
+      color: var(--text-cream);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      width: 100%;
+      height: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "kern" 1, "liga" 1, "dlig" 1;
+    }
+
+    /* Studio Preloader */
+    .preloader {
+      position: fixed;
+      inset: 0;
+      background-color: #050504;
+      z-index: 100000;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4rem;
+      pointer-events: all;
+    }
+
+    .preloader-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .preloader-center {
+      text-align: center;
+    }
+
+    .preloader-brand {
+      font-family: var(--font-serif-hero);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      letter-spacing: 0.4em;
+      color: var(--text-cream);
+      font-weight: 400;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      line-height: 0.9;
+    }
+
+    .preloader-counter {
+      font-family: var(--font-serif-hero);
+      font-size: 3rem;
+      color: var(--accent-gold);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .preloader-bottom {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .preloader-bar {
+      width: 100%;
+      height: 1px;
+      background: var(--border-subtle);
+      margin-top: 2rem;
+      position: relative;
+    }
+
+    .preloader-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent-gold);
+      transition: width 0.1s linear;
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background-color: var(--text-cream);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, background-color 0.2s ease, width 0.2s ease, height 0.2s ease;
+      mix-blend-mode: difference;
+    }
+
+    .custom-cursor-follower {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(246, 243, 235, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease;
+    }
+
+    .custom-cursor-follower.hovering {
+      transform: translate(-50%, -50%) scale(1.6);
+      border-color: var(--accent-gold);
+    }
+
+    /* Noise & Vignette Overlays */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9990;
+      opacity: 0.35;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .vignette-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9989;
+      background: radial-gradient(circle at center, transparent 35%, rgba(5, 4, 4, 0.82) 100%);
+    }
+
+    /* Typography Utilities */
+    .font-serif { font-family: var(--font-serif-hero); }
+    .font-display { font-family: var(--font-serif-display); }
+    .font-sans { font-family: var(--font-sans); }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: var(--accent-gold);
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .line-mask {
+      overflow: hidden;
+      display: block;
+    }
+
+    .line-mask-inner {
+      display: block;
+      transform: translateY(110%);
+      will-change: transform;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+
+    .brand-logo {
+      font-family: var(--font-serif-hero);
+      font-size: 1.9rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--text-cream);
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+      font-weight: 400;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background-color: var(--accent-gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text-cream);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .sound-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-cream);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.3s ease;
+    }
+
+    .sound-toggle-btn:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    .sound-wave {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 10px;
+    }
+
+    .sound-bar {
+      width: 2px;
+      height: 100%;
+      background-color: var(--accent-gold);
+      animation: soundWave 1.2s ease-in-out infinite alternate;
+      animation-play-state: paused;
+    }
+
+    .sound-bar:nth-child(2) { animation-delay: 0.2s; }
+    .sound-bar:nth-child(3) { animation-delay: 0.4s; }
+
+    .sound-toggle-btn.active .sound-bar {
+      animation-play-state: running;
+    }
+
+    @keyframes soundWave {
+      0% { height: 3px; }
+      100% { height: 12px; }
+    }
+
+    .header-cta {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-cream);
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 40px;
+      transition: all 0.3s ease;
+    }
+
+    .header-cta:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      box-shadow: 0 0 20px var(--accent-gold-glow);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 6vw;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-bg img {
+      width: 110%;
+      height: 110%;
+      object-fit: cover;
+      object-position: center left;
+      filter: brightness(0.65) contrast(1.1);
+      transform: scale(1.05);
+      will-change: transform, filter;
+      transition: filter 0.8s ease;
+    }
+
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.6;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 68vw;
+      margin-top: 5vh;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif-hero);
+      font-size: clamp(4.2rem, 9.5vw, 11rem);
+      font-weight: 400;
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      color: var(--text-cream);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-title span.gold-italic {
+      font-style: italic;
+      color: var(--accent-gold);
+      font-weight: 400;
+      letter-spacing: 0em;
+    }
+
+    .hero-sub {
+      display: flex;
+      align-items: flex-start;
+      gap: 4rem;
+      max-width: 42rem;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-scroll-indicator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-top: 1rem;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background-color: var(--accent-gold);
+      transform-origin: left;
+      animation: pulseLine 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseLine {
+      0%, 100% { transform: scaleX(1); opacity: 0.4; }
+      50% { transform: scaleX(1.4); opacity: 1; }
+    }
+
+    /* Leather Colorway Swatch Bar */
+    .swatch-bar {
+      position: absolute;
+      bottom: 3rem;
+      right: 4rem;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: rgba(15, 14, 13, 0.75);
+      backdrop-filter: blur(16px);
+      padding: 0.8rem 1.6rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 50px;
+    }
+
+    .swatch-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .swatches {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .swatch-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .swatch-btn::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+
+    .swatch-btn.active::after {
+      border-color: var(--accent-gold);
+    }
+
+    .swatch-cognac { background: linear-gradient(135deg, #a86538 0%, #683a1b 100%); }
+    .swatch-noir { background: linear-gradient(135deg, #2b2927 0%, #0d0c0b 100%); }
+    .swatch-espresso { background: linear-gradient(135deg, #533624 0%, #291a10 100%); }
+
+    /* Editorial Material Story ("The Leather") */
+    .material-section {
+      padding: 18vh 6vw;
+      background-color: var(--bg-dark);
+      position: relative;
+      z-index: 10;
+    }
+
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 8vw;
+      align-items: center;
+    }
+
+    .material-quote-wrapper {
+      padding-right: 2vw;
+    }
+
+    .material-quote {
+      font-family: var(--font-serif-display);
+      font-size: clamp(2.5rem, 4.2vw, 4.6rem);
+      line-height: 1.05;
+      font-weight: 300;
+      color: var(--text-cream);
+      margin-bottom: 3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .material-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 3.5rem;
+      max-width: 32rem;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 3.5rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .stat-val {
+      font-family: var(--font-serif-hero);
+      font-size: 2.5rem;
+      color: var(--text-cream);
+      font-style: italic;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--accent-gold);
+    }
+
+    .material-image-container {
+      position: relative;
+      width: 100%;
+      height: 75vh;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .material-image-container img {
+      width: 100%;
+      height: 120%;
+      object-fit: cover;
+      will-change: transform;
+      transition: filter 0.8s ease;
+    }
+
+    .image-caption-tag {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-cream);
+      background: rgba(11, 10, 9, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+    }
+
+    /* Hotspot Annotation Pins */
+    .hotspot-pin {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(197, 155, 39, 0.3);
+      border: 1px solid var(--accent-gold);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      z-index: 20;
+    }
+
+    .hotspot-pin::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-gold);
+    }
+
+    .hotspot-pin::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-gold);
+      animation: pinPulse 2s ease-out infinite;
+    }
+
+    @keyframes pinPulse {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    .hotspot-pin:hover {
+      transform: scale(1.25);
+      background: rgba(197, 155, 39, 0.6);
+    }
+
+    .hotspot-tooltip {
+      position: absolute;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      width: 240px;
+      background: rgba(20, 19, 17, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-gold);
+      padding: 1rem;
+      border-radius: 8px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .hotspot-pin:hover .hotspot-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .tooltip-title {
+      font-family: var(--font-serif-hero);
+      font-size: 1.2rem;
+      color: var(--text-cream);
+      margin-bottom: 0.3rem;
+    }
+
+    .tooltip-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* PATINA OVER TIME AGING SIMULATOR SECTION */
+    .patina-section {
+      padding: 16vh 6vw;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .patina-header {
+      max-width: 48rem;
+      margin-bottom: 6vh;
+    }
+
+    .patina-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 6vw;
+      align-items: center;
+    }
+
+    .patina-stage {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .patina-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: filter 0.6s ease;
+      will-change: filter;
+    }
+
+    .patina-badge {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      font-family: var(--font-serif-hero);
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--accent-gold);
+      background: rgba(11, 10, 9, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border-gold);
+      border-radius: 30px;
+    }
+
+    .patina-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .patina-slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .patina-range {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .patina-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      cursor: pointer;
+      box-shadow: 0 0 15px var(--accent-gold-glow);
+      transition: transform 0.2s ease;
+    }
+
+    .patina-range::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    .patina-years-nav {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+    }
+
+    .patina-year-step {
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .patina-year-step.active {
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+
+    .patina-description-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 2rem;
+      border-radius: 6px;
+    }
+
+    .patina-desc-title {
+      font-family: var(--font-serif-hero);
+      font-size: 1.8rem;
+      color: var(--text-cream);
+      margin-bottom: 0.8rem;
+    }
+
+    .patina-desc-body {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* X-RAY ARCHITECTURE INSPECTOR */
+    .xray-section {
+      padding: 16vh 6vw;
+      background-color: var(--bg-dark);
+    }
+
+    .xray-container {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      user-select: none;
+    }
+
+    .xray-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .xray-layer.photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .xray-layer.blueprint {
+      background-color: #060910;
+      background-image: radial-gradient(rgba(197, 155, 39, 0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    }
+
+    .blueprint-svg-schematic {
+      width: 80%;
+      max-width: 600px;
+      stroke: var(--accent-gold);
+      stroke-width: 1.2;
+      fill: none;
+      opacity: 0.85;
+    }
+
+    .xray-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--accent-gold);
+      cursor: ew-resize;
+      z-index: 30;
+      transform: translateX(-50%);
+      box-shadow: 0 0 20px var(--accent-gold-glow);
+    }
+
+    .xray-divider-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 0 30px var(--accent-gold-glow);
+    }
+
+    /* Pinned Craft Section ("The Craft") */
+    .craft-pin-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--bg-surface);
+      overflow: hidden;
+    }
+
+    .craft-inner {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+    }
+
+    .craft-image-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .craft-stage-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.08);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+      will-change: opacity, transform;
+    }
+
+    .craft-stage-img.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .craft-info-stage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 8vw;
+      background: linear-gradient(90deg, rgba(20, 19, 17, 0.95) 0%, rgba(20, 19, 17, 1) 40%);
+      z-index: 5;
+    }
+
+    .craft-step-counter {
+      font-family: var(--font-serif-hero);
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--accent-gold);
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .craft-card-content {
+      position: relative;
+      min-height: 240px;
+    }
+
+    .craft-slide-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .craft-slide-text.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .craft-slide-heading {
+      font-family: var(--font-serif-display);
+      font-size: clamp(2.4rem, 3.8vw, 4rem);
+      line-height: 1.05;
+      font-weight: 400;
+      color: var(--text-cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .craft-slide-body {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 28rem;
+    }
+
+    .craft-progress-bar {
+      width: 100%;
+      height: 2px;
+      background-color: var(--border-subtle);
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    .craft-progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 25%;
+      background-color: var(--accent-gold);
+      transition: width 0.4s ease;
+    }
+
+    /* UNBOXING EXPERIENCE SECTION */
+    .unboxing-section {
+      padding: 18vh 6vw;
+      background-color: var(--bg-dark);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .unboxing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3vw;
+      margin-top: 8vh;
+    }
+
+    .unboxing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 380px;
+      transition: border-color 0.4s ease, transform 0.4s ease;
+    }
+
+    .unboxing-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+    }
+
+    .unboxing-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .unboxing-title {
+      font-family: var(--font-serif-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text-cream);
+      margin-bottom: 1rem;
+    }
+
+    .unboxing-desc {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    .unboxing-serial-box {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #0d0c0b;
+      border: 1px dashed var(--border-gold);
+      border-radius: 4px;
+      text-align: center;
+      font-family: monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-gold);
+    }
+
+    /* Details Section ("The Details") */
+    .details-section {
+      padding: 20vh 6vw;
+      background-color: var(--bg-surface);
+    }
+
+    .details-header {
+      margin-bottom: 10vh;
+      max-width: 48rem;
+    }
+
+    .details-title {
+      font-family: var(--font-serif-display);
+      font-size: clamp(3rem, 5.5vw, 5.6rem);
+      line-height: 1.02;
+      font-weight: 300;
+      color: var(--text-cream);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5vw;
+    }
+
+    .detail-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease, transform 0.4s ease;
+    }
+
+    .detail-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-8px);
+    }
+
+    .card-num {
+      font-family: var(--font-serif-hero);
+      font-size: 1.6rem;
+      font-style: italic;
+      color: var(--accent-gold);
+      margin-bottom: 2rem;
+    }
+
+    .card-img-preview {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .card-img-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+      transition: transform 0.6s ease, filter 0.8s ease;
+    }
+
+    .detail-card:hover .card-img-preview img {
+      transform: scale(1.08);
+    }
+
+    .card-title {
+      font-family: var(--font-serif-display);
+      font-size: 1.9rem;
+      font-weight: 400;
+      color: var(--text-cream);
+      margin-bottom: 1rem;
+    }
+
+    .card-body {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* Final CTA Section */
+    .cta-section {
+      padding: 25vh 6vw 15vh 6vw;
+      background-color: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-headline {
+      font-family: var(--font-serif-hero);
+      font-size: clamp(3.5rem, 8vw, 9.5rem);
+      font-weight: 400;
+      line-height: 0.9;
+      color: var(--text-cream);
+      max-width: 72rem;
+      margin-bottom: 4rem;
+      text-transform: uppercase;
+    }
+
+    .magnetic-btn-wrapper {
+      display: inline-block;
+      position: relative;
+    }
+
+    .magnetic-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1.6rem 4rem;
+      background-color: var(--accent-gold);
+      color: #000;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 60px;
+      box-shadow: 0 0 40px var(--accent-gold-glow);
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .magnetic-btn:hover {
+      background-color: #d8b843;
+      box-shadow: 0 0 60px rgba(197, 155, 39, 0.4);
+    }
+
+    .btn-arrow {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform 0.3s ease;
+    }
+
+    .magnetic-btn:hover .btn-arrow {
+      transform: translateX(5px);
+    }
+
+    .edition-tag {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Checkout Acquisition Modal Drawer */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 5, 4, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 100000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .drawer-backdrop.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .acquisition-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 540px;
+      height: 100vh;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-gold);
+      z-index: 100001;
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+    }
+
+    .drawer-backdrop.active .acquisition-drawer {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.5rem;
+    }
+
+    .drawer-title {
+      font-family: var(--font-serif-display);
+      font-size: 1.9rem;
+      color: var(--text-cream);
+      letter-spacing: 0.05em;
+    }
+
+    .drawer-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .drawer-close-btn:hover {
+      color: var(--accent-gold);
+    }
+
+    .drawer-body {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .monogram-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .input-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+
+    .monogram-field {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-cream);
+      padding: 1rem 1.2rem;
+      border-radius: 4px;
+      font-family: var(--font-serif-hero);
+      font-size: 1.4rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .monogram-field:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .foil-selector {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .foil-opt {
+      flex: 1;
+      padding: 0.8rem 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .foil-opt.active {
+      border-color: var(--accent-gold);
+      color: var(--text-cream);
+      background: rgba(197, 155, 39, 0.1);
+    }
+
+    .monogram-preview-card {
+      background: #0d0c0b;
+      border: 1px dashed var(--border-gold);
+      padding: 2.2rem;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .preview-foil-text {
+      font-family: var(--font-serif-hero);
+      font-size: 2.8rem;
+      letter-spacing: 0.4em;
+      font-weight: 400;
+      transition: all 0.4s ease;
+    }
+
+    .preview-foil-text.gold {
+      background: linear-gradient(135deg, #e5ca76 0%, #c59b27 50%, #866613 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .preview-foil-text.silver {
+      background: linear-gradient(135deg, #ffffff 0%, #a8a8a8 50%, #606060 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .preview-foil-text.blind {
+      color: #2b251e;
+      text-shadow: -1px -1px 0px rgba(255,255,255,0.08), 1px 1px 2px rgba(0,0,0,0.9);
+      -webkit-text-fill-color: initial;
+    }
+
+    .checkout-summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1rem;
+    }
+
+    .checkout-summary-row.total {
+      color: var(--text-cream);
+      font-size: 1.1rem;
+      font-weight: 500;
+      border-top: 1px solid var(--border-gold);
+    }
+
+    .drawer-confirm-btn {
+      width: 100%;
+      padding: 1.4rem;
+      background-color: var(--accent-gold);
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .drawer-confirm-btn:hover {
+      background-color: #d8b843;
+      transform: translateY(-2px);
+    }
+
+    /* Atelier World Clocks Footer */
+    .ateliers-world-bar {
+      padding: 4rem 6vw;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4vw;
+    }
+
+    .atelier-city-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .city-name {
+      font-family: var(--font-serif-display);
+      font-size: 1.6rem;
+      color: var(--text-cream);
+    }
+
+    .city-time {
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      color: var(--accent-gold);
+      font-weight: 500;
+    }
+
+    .city-addr {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      padding: 5rem 6vw 4rem 6vw;
+      background-color: var(--bg-dark);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-serif-hero);
+      font-size: 2.2rem;
+      letter-spacing: 0.35em;
+      color: var(--text-cream);
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-locations {
+      display: flex;
+      gap: 2.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 900px) {
+      header { padding: 1.5rem 2rem; }
+      .nav-links { display: none; }
+      .hero-content { max-width: 100%; }
+      .swatch-bar { bottom: 1.5rem; right: 1.5rem; }
+      .editorial-grid, .patina-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .craft-inner { grid-template-columns: 1fr; }
+      .craft-info-stage { padding: 4rem 2rem; }
+      .cards-grid, .unboxing-grid, .ateliers-world-bar { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 3rem; align-items: flex-start; }
+      .acquisition-drawer { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Studio Preloader Overlay -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-top">
+      <span>MERIDIAN ATELIER — PARIS</span>
+      <span>EDITION 01 / 250</span>
+    </div>
+    <div class="preloader-center">
+      <h1 class="preloader-brand">MERIDIAN</h1>
+      <div class="preloader-counter" id="loader-counter">00</div>
+    </div>
+    <div class="preloader-bottom">
+      <span>HEIRLOOM LEATHERWARE</span>
+      <span>LOADING ARCHIVE...</span>
+    </div>
+    <div class="preloader-bar">
+      <div class="preloader-bar-fill" id="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Custom Cursor Elements -->
+  <div class="custom-cursor" id="cursor"></div>
+  <div class="custom-cursor-follower" id="cursor-follower"></div>
+
+  <!-- Noise & Vignette Overlay -->
+  <div class="noise-overlay"></div>
+  <div class="vignette-overlay"></div>
+
+  <!-- Header Navigation -->
+  <header>
+    <a href="#" class="brand-logo magnetic-target">MERIDIAN</a>
+    <ul class="nav-links">
+      <li><a href="#material" class="nav-link magnetic-target">01. LEATHER</a></li>
+      <li><a href="#patina" class="nav-link magnetic-target">02. AGING</a></li>
+      <li><a href="#craft" class="nav-link magnetic-target">03. CRAFT</a></li>
+      <li><a href="#unboxing" class="nav-link magnetic-target">04. UNBOXING</a></li>
+    </ul>
+
+    <div class="header-actions">
+      <button class="sound-toggle-btn magnetic-target" id="sound-toggle">
+        <span class="sound-wave">
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+        </span>
+        <span id="sound-state-label">SOUND: OFF</span>
+      </button>
+
+      <a href="#acquire" class="header-cta magnetic-target" id="header-reserve-btn">ACQUIRE NO. 1</a>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper for Lenis -->
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-bg">
+        <img src="assets/hero.png" alt="Meridian Full Grain Leather Wallet" id="hero-img" class="leather-swatch-target">
+        <canvas class="hero-canvas" id="hero-light-canvas"></canvas>
+      </div>
+
+      <div class="hero-content">
+        <span class="eyebrow gsap-reveal-fade">MERIDIAN ARCHIVE — EDITION 01</span>
+        
+        <h1 class="hero-title">
+          <span class="line-mask"><span class="line-mask-inner">OBJECT OF</span></span>
+          <span class="line-mask"><span class="line-mask-inner gold-italic">PERMANENCE.</span></span>
+        </h1>
+
+        <div class="hero-sub gsap-reveal-fade">
+          <p class="hero-desc">
+            Hand-stitched full-grain French calfskin wallet. Engineered without synthetics, adhesives, or compromise. Designed to outlive its owner.
+          </p>
+          <div class="hero-scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>SCROLL TO DISCOVER</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leather Colorway Finish Swatch Bar -->
+      <div class="swatch-bar">
+        <span class="swatch-label">FINISH:</span>
+        <div class="swatches">
+          <button class="swatch-btn swatch-cognac active magnetic-target" data-finish="cognac" title="Cognac Antique"></button>
+          <button class="swatch-btn swatch-noir magnetic-target" data-finish="noir" title="Noir Intense"></button>
+          <button class="swatch-btn swatch-espresso magnetic-target" data-finish="espresso" title="Espresso Raw"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE LEATHER (Material Story) -->
+    <section class="material-section" id="material">
+      <div class="editorial-grid">
+        <div class="material-quote-wrapper">
+          <span class="eyebrow gsap-reveal-eyebrow">01 / MATERIAL INTEGRITY</span>
+          <h2 class="material-quote gsap-reveal-title">
+            Tanned with oak bark over nine months in Alsace. It does not wear — it acquires memory.
+          </h2>
+          <p class="material-body gsap-reveal-text">
+            Every Meridian wallet begins with unblemished full-grain hide, selected from the top 1% of French calfskin. Unvarnished and chemically untreated, the natural surface retains every pore, developing a rich amber patina unique to your journey.
+          </p>
+
+          <div class="stats-row gsap-reveal-stats">
+            <div class="stat-item">
+              <span class="stat-val font-serif">0.8mm</span>
+              <span class="stat-label">SPLIT PRECISION</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-val font-serif">100%</span>
+              <span class="stat-label">NATURAL TANNIN</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-val font-serif">250</span>
+              <span class="stat-label">NUMBERED UNITS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-image-container">
+          <img src="assets/open.png" alt="Meridian Wallet Interior Card Slots" id="material-img" class="leather-swatch-target">
+          <span class="image-caption-tag">FIG. 01 — ANATOMY OF CARD CAVITY</span>
+
+          <!-- Interactive Hotspot Annotation Pins -->
+          <div class="hotspot-pin" style="top: 35%; left: 45%;">
+            <div class="hotspot-tooltip">
+              <div class="tooltip-title">Suede Lining</div>
+              <div class="tooltip-desc">French nubuck suede backing prevents card slippage without extra bulk.</div>
+            </div>
+          </div>
+
+          <div class="hotspot-pin" style="top: 65%; left: 60%;">
+            <div class="hotspot-tooltip">
+              <div class="tooltip-title">Saddle Seam</div>
+              <div class="tooltip-desc">Dual-hand needle stitch using waxed 0.6mm linen thread.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: PATINA OVER TIME AGING SIMULATOR -->
+    <section class="patina-section" id="patina">
+      <div class="patina-header">
+        <span class="eyebrow gsap-reveal-eyebrow">02 / LEATHER CHRONOLOGY</span>
+        <h2 class="details-title gsap-reveal-title">
+          Designed to age with distinction.
+        </h2>
+      </div>
+
+      <div class="patina-grid">
+        <div class="patina-stage">
+          <img src="assets/flatlay.png" alt="Patina Aging Preview" id="patina-img">
+          <div class="patina-badge" id="patina-year-badge">DAY 1</div>
+        </div>
+
+        <div class="patina-controls">
+          <div class="patina-slider-group">
+            <span class="input-label">SCRUB DECADE PATINA TIMELINE:</span>
+            <input type="range" class="patina-range" id="patina-slider" min="0" max="3" step="1" value="0">
+            
+            <div class="patina-years-nav">
+              <span class="patina-year-step active" data-step="0">DAY 1</span>
+              <span class="patina-year-step" data-step="1">YEAR 1</span>
+              <span class="patina-year-step" data-step="2">YEAR 5</span>
+              <span class="patina-year-step" data-step="3">YEAR 10</span>
+            </div>
+          </div>
+
+          <div class="patina-description-box">
+            <h3 class="patina-desc-title" id="patina-state-title">Fresh Oak-Bark Tannage</h3>
+            <p class="patina-desc-body" id="patina-state-body">
+              Unblemished natural full-grain surface. Smooth matte texture with soft honey highlights ready to absorb oils from daily handling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: X-RAY ARCHITECTURAL SCHEMATIC -->
+    <section class="xray-section">
+      <div class="details-header" style="margin-bottom: 4vh;">
+        <span class="eyebrow gsap-reveal-eyebrow">INTERNAL SCHEMATIC</span>
+        <h2 class="details-title gsap-reveal-title">Hidden structural engineering.</h2>
+      </div>
+
+      <div class="xray-container" id="xray-box">
+        <div class="xray-layer photo">
+          <img src="assets/hero.png" alt="Meridian Wallet Physical Form">
+        </div>
+
+        <div class="xray-layer blueprint" id="xray-blueprint">
+          <svg class="blueprint-svg-schematic" viewBox="0 0 400 300">
+            <rect x="50" y="40" width="300" height="220" rx="12" stroke="#c59b27" stroke-dasharray="4 4" />
+            <path d="M 60 90 L 340 90 M 60 140 L 340 140 M 60 190 L 340 190" stroke="#c59b27" opacity="0.6"/>
+            <circle cx="200" cy="150" r="45" stroke="#c59b27" opacity="0.8"/>
+            <text x="145" y="154" fill="#c59b27" font-size="10" font-family="monospace" letter-spacing="2">RFID COPPER SHIELD</text>
+            <path d="M 50 40 L 50 260 M 350 40 L 350 260" stroke="#c59b27" stroke-width="2"/>
+            <text x="60" y="245" fill="#9e998e" font-size="8" font-family="sans-serif">WAXED SADDLE THREAD: 0.6mm</text>
+          </svg>
+        </div>
+
+        <div class="xray-divider" id="xray-divider">
+          <div class="xray-divider-handle">&harr;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: THE CRAFT (Pinned Scrub Section) -->
+    <section class="craft-pin-wrapper" id="craft">
+      <div class="craft-inner">
+
+        <!-- Left Column: Stacked Images -->
+        <div class="craft-image-stage">
+          <img src="assets/hero.png" alt="Meridian Hero Angle" class="craft-stage-img active leather-swatch-target" data-step="0">
+          <img src="assets/open.png" alt="Meridian Interior View" class="craft-stage-img leather-swatch-target" data-step="1">
+          <img src="assets/flatlay.png" alt="Meridian Flatlay Geometry" class="craft-stage-img leather-swatch-target" data-step="2">
+          <img src="assets/macro.png" alt="Meridian Hand Stitch Detail" class="craft-stage-img leather-swatch-target" data-step="3">
+        </div>
+
+        <!-- Right Column: Text Information Scrubbing -->
+        <div class="craft-info-stage">
+          <span class="eyebrow">03 / ARCHITECTURAL CRAFT</span>
+          <span class="craft-step-counter" id="craft-step-num">01 / 04</span>
+
+          <div class="craft-card-content">
+            <div class="craft-slide-text active" data-step="0">
+              <h3 class="craft-slide-heading">I. MONOLITHIC HIDE FORM</h3>
+              <p class="craft-slide-body">
+                Precision-cut from a single continuous hide. Zero cardboard stiffeners, zero polyester linings. Only pure leather contacting leather.
+              </p>
+            </div>
+
+            <div class="craft-slide-text" data-step="1">
+              <h3 class="craft-slide-heading">II. CAVITY GEOMETRY</h3>
+              <p class="craft-slide-body">
+                Bevelled card slots lined with ultra-soft suede. Holds up to 8 cards and flat currency notes without expanding beyond 12mm thickness.
+              </p>
+            </div>
+
+            <div class="craft-slide-text" data-step="2">
+              <h3 class="craft-slide-heading">III. COMPACT PROPORTIONS</h3>
+              <p class="craft-slide-body">
+                Dimensions: 105mm × 85mm × 10mm. Sculpted to rest weightlessly in breast or trousers pockets with zero silhouette distortion.
+              </p>
+            </div>
+
+            <div class="craft-slide-text" data-step="3">
+              <h3 class="craft-slide-heading">IV. SADDLE STITCH SEAM</h3>
+              <p class="craft-slide-body">
+                Hand-stitched using two needles and beeswaxed linen thread. Unlike machine lockstitches, if one stitch breaks, the rest remain indestructible.
+              </p>
+            </div>
+          </div>
+
+          <div class="craft-progress-bar">
+            <div class="craft-progress-fill" id="craft-progress"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: THE UNBOXING EXPERIENCE -->
+    <section class="unboxing-section" id="unboxing">
+      <div class="details-header">
+        <span class="eyebrow gsap-reveal-eyebrow">04 / THE PRESENTATION</span>
+        <h2 class="details-title gsap-reveal-title">Unboxing the heirloom.</h2>
+      </div>
+
+      <div class="unboxing-grid">
+        <div class="unboxing-card">
+          <div>
+            <div class="unboxing-tag">ITEM 01</div>
+            <h3 class="unboxing-title">Archival Cedar Box</h3>
+            <p class="unboxing-desc">
+              Crafted from Japanese cedarwood. Naturally aroma-sealed and moth-resistant for lifelong leather preservation.
+            </p>
+          </div>
+        </div>
+
+        <div class="unboxing-card">
+          <div>
+            <div class="unboxing-tag">ITEM 02</div>
+            <h3 class="unboxing-title">Hand-Stamped Wax Seal</h3>
+            <p class="unboxing-desc">
+              Includes an individually numbered Atelier certificate signed by the master leather artisan.
+            </p>
+            <div class="unboxing-serial-box">CERT # MER-2026-042</div>
+          </div>
+        </div>
+
+        <div class="unboxing-card">
+          <div>
+            <div class="unboxing-tag">ITEM 03</div>
+            <h3 class="unboxing-title">Raw Linen Dust Bag</h3>
+            <p class="unboxing-desc">
+              Unbleached French linen pouch woven in Normandy. Protects hide during travel.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FINAL CTA SECTION -->
+    <section class="cta-section" id="acquire">
+      <span class="eyebrow gsap-reveal-eyebrow">LIMITED RELEASE — 250 UNITS</span>
+      <h2 class="cta-headline gsap-reveal-title">
+        FEWER THINGS.<br><span class="font-serif gold-italic">MADE BETTER.</span>
+      </h2>
+
+      <div class="magnetic-btn-wrapper">
+        <button class="magnetic-btn magnetic-target" id="cta-button">
+          <span>ACQUIRE MERIDIAN NO. 1 — $380</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <span class="edition-tag">INCLUDES HAND-STAMPED CERTIFICATE & ARCHIVAL WOODEN BOX</span>
+    </section>
+
+    <!-- ATELIERS WORLD CLOCKS FOOTER BAR -->
+    <div class="ateliers-world-bar">
+      <div class="atelier-city-card">
+        <div class="city-name">PARIS — LE MARAIS</div>
+        <div class="city-time" id="time-paris">15:09:26 CEST</div>
+        <div class="city-addr">24 Rue Vieille du Temple, 75004</div>
+      </div>
+
+      <div class="atelier-city-card">
+        <div class="city-name">TOKYO — GINZA</div>
+        <div class="city-time" id="time-tokyo">22:09:26 JST</div>
+        <div class="city-addr">6-10-1 Ginza, Chuo-ku, 104-0061</div>
+      </div>
+
+      <div class="atelier-city-card">
+        <div class="city-name">NEW YORK — SOHO</div>
+        <div class="city-time" id="time-ny">09:09:26 EDT</div>
+        <div class="city-addr">112 Prince Street, NY 10012</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-brand">
+        <div class="footer-logo">MERIDIAN</div>
+        <p class="footer-copy">© 2026 MERIDIAN ATELIER S.A. ALL RIGHTS RESERVED.</p>
+      </div>
+
+      <div class="footer-locations">
+        <span>PARIS</span>
+        <span>TOKYO</span>
+        <span>NEW YORK</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Checkout / Monogram Acquisition Drawer -->
+  <div class="drawer-backdrop" id="drawer-backdrop">
+    <div class="acquisition-drawer">
+      <div class="drawer-header">
+        <h3 class="drawer-title">RESERVE EDITION NO. 1</h3>
+        <button class="drawer-close-btn" id="drawer-close">&times;</button>
+      </div>
+
+      <div class="drawer-body">
+        <div class="monogram-input-group">
+          <span class="input-label">PERSONALIZED INITIALS (UP TO 3 LETTERS):</span>
+          <input type="text" class="monogram-field" id="monogram-input" maxlength="3" value="AV" placeholder="M.R">
+        </div>
+
+        <div class="monogram-input-group">
+          <span class="input-label">HOT-STAMP FOIL FINISH:</span>
+          <div class="foil-selector">
+            <button class="foil-opt active magnetic-target" data-foil="gold">24k Gold</button>
+            <button class="foil-opt magnetic-target" data-foil="silver">Sterling Silver</button>
+            <button class="foil-opt magnetic-target" data-foil="blind">Blind Stamp</button>
+          </div>
+        </div>
+
+        <div class="monogram-preview-card">
+          <span class="input-label" style="margin-bottom: 0.8rem; display: block;">HOT-STAMP EMBOSS PREVIEW:</span>
+          <div class="preview-foil-text gold" id="monogram-preview">A.V</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <div class="checkout-summary-row">
+            <span>MERIDIAN NO. 1 (COGNAC)</span>
+            <span>$380.00</span>
+          </div>
+          <div class="checkout-summary-row">
+            <span>CUSTOM FOIL MONOGRAM</span>
+            <span>COMPLIMENTARY</span>
+          </div>
+          <div class="checkout-summary-row">
+            <span>COMPLIMENTARY INSURED EXPRESS</span>
+            <span>$0.00</span>
+          </div>
+          <div class="checkout-summary-row total">
+            <span>TOTAL</span>
+            <span>$380.00 USD</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="drawer-confirm-btn magnetic-target" id="drawer-confirm">PROCEED TO ATELIER CHECKOUT</button>
+    </div>
+  </div>
+
+  <!-- GSAP & Lenis Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+
+  <script>
+    // Register GSAP Plugins
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Studio Preloader Sequence
+    const loaderBar = document.getElementById('loader-bar');
+    const loaderCounter = document.getElementById('loader-counter');
+    const preloader = document.getElementById('preloader');
+
+    let count = 0;
+    const interval = setInterval(() => {
+      count += Math.floor(Math.random() * 5) + 2;
+      if (count >= 100) {
+        count = 100;
+        clearInterval(interval);
+        setTimeout(revealPage, 200);
+      }
+      loaderCounter.textContent = count < 10 ? '0' + count : count;
+      loaderBar.style.width = count + '%';
+    }, 25);
+
+    function revealPage() {
+      gsap.to(preloader, {
+        y: '-100%',
+        duration: 1.2,
+        ease: 'power4.inOut',
+        onComplete: () => {
+          preloader.style.display = 'none';
+          initHeroAnimations();
+        }
+      });
+    }
+
+    // 2. Initialize Lenis Inertia Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // 3. Custom Magnetic Cursor Logic
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursor-follower');
+    const magneticTargets = document.querySelectorAll('.magnetic-target');
+
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      gsap.to(cursor, {
+        x: mouseX,
+        y: mouseY,
+        duration: 0.1
+      });
+    });
+
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.15;
+      followerY += (mouseY - followerY) * 0.15;
+
+      follower.style.transform = `translate(${followerX}px, ${followerY}px) translate(-50%, -50%)`;
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Magnetic button effects & Audio Click Trigger
+    magneticTargets.forEach((target) => {
+      target.addEventListener('mousemove', (e) => {
+        const rect = target.getBoundingClientRect();
+        const relX = e.clientX - rect.left - rect.width / 2;
+        const relY = e.clientY - rect.top - rect.height / 2;
+
+        gsap.to(target, {
+          x: relX * 0.35,
+          y: relY * 0.35,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+
+        follower.classList.add('hovering');
+      });
+
+      target.addEventListener('mouseleave', () => {
+        gsap.to(target, {
+          x: 0,
+          y: 0,
+          duration: 0.5,
+          ease: 'power3.out'
+        });
+
+        follower.classList.remove('hovering');
+      });
+
+      target.addEventListener('click', () => {
+        playTactileClick();
+      });
+    });
+
+    // 4. Web Audio API Sound System
+    let audioCtx = null;
+    let isSoundOn = false;
+    const soundToggle = document.getElementById('sound-toggle');
+    const soundLabel = document.getElementById('sound-state-label');
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    soundToggle.addEventListener('click', () => {
+      initAudio();
+      isSoundOn = !isSoundOn;
+      soundToggle.classList.toggle('active', isSoundOn);
+      soundLabel.textContent = isSoundOn ? 'SOUND: ON' : 'SOUND: OFF';
+
+      if (isSoundOn) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        playAmbientDrone();
+      } else {
+        if (audioCtx) audioCtx.suspend();
+      }
+    });
+
+    function playTactileClick() {
+      if (!isSoundOn || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.08);
+
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.08);
+    }
+
+    function playChime() {
+      if (!isSoundOn || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.4);
+
+      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.6);
+    }
+
+    function playAmbientDrone() {
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(55, audioCtx.currentTime);
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(110, audioCtx.currentTime);
+
+      gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.035, audioCtx.currentTime + 3);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc1.start();
+      osc2.start();
+    }
+
+    // 5. Hero Light Canvas Particles
+    const canvas = document.getElementById('hero-light-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 45; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.5 + 0.2,
+        vy: -Math.random() * 0.3 - 0.1,
+        vx: (Math.random() - 0.5) * 0.2
+      });
+    }
+
+    function drawCanvas() {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.y += p.vy;
+        p.x += p.vx;
+
+        if (p.y < 0) p.y = height;
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(225, 185, 80, ${p.alpha})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#c59b27';
+        ctx.fill();
+      });
+
+      requestAnimationFrame(drawCanvas);
+    }
+    drawCanvas();
+
+    // 6. Hero Entrance Animations & Parallax
+    function initHeroAnimations() {
+      const heroTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+      heroTl
+        .to('.line-mask-inner', {
+          y: '0%',
+          duration: 1.5,
+          stagger: 0.15
+        })
+        .to('.gsap-reveal-fade', {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          stagger: 0.2
+        }, '-=1.0');
+    }
+
+    const heroBgImg = document.getElementById('hero-img');
+    window.addEventListener('mousemove', (e) => {
+      const xPercent = (e.clientX / window.innerWidth - 0.5) * 30;
+      const yPercent = (e.clientY / window.innerHeight - 0.5) * 30;
+
+      gsap.to(heroBgImg, {
+        x: xPercent,
+        y: yPercent,
+        duration: 1.5,
+        ease: 'power2.out'
+      });
+    });
+
+    // 7. Leather Swatch Finish Filter Logic
+    const swatchBtns = document.querySelectorAll('.swatch-btn');
+    const swatchTargets = document.querySelectorAll('.leather-swatch-target');
+
+    swatchBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        swatchBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const finish = btn.dataset.finish;
+        let filterVal = 'brightness(0.65) contrast(1.1)';
+
+        if (finish === 'noir') {
+          filterVal = 'brightness(0.5) contrast(1.45) grayscale(0.85) sepia(0.1)';
+        } else if (finish === 'espresso') {
+          filterVal = 'brightness(0.55) contrast(1.25) sepia(0.4) hue-rotate(-15deg)';
+        }
+
+        swatchTargets.forEach(img => {
+          img.style.filter = filterVal;
+        });
+      });
+    });
+
+    // 8. Patina Aging Simulator Slider Logic
+    const patinaSlider = document.getElementById('patina-slider');
+    const patinaImg = document.getElementById('patina-img');
+    const patinaYearBadge = document.getElementById('patina-year-badge');
+    const patinaTitle = document.getElementById('patina-state-title');
+    const patinaBody = document.getElementById('patina-state-body');
+    const patinaYearSteps = document.querySelectorAll('.patina-year-step');
+
+    const patinaData = [
+      {
+        year: 'DAY 1',
+        title: 'Fresh Oak-Bark Tannage',
+        desc: 'Unblemished natural full-grain surface. Smooth matte texture with soft honey highlights ready to absorb oils from daily handling.',
+        filter: 'brightness(0.9) contrast(1.05) sepia(0)'
+      },
+      {
+        year: 'YEAR 1',
+        title: 'Silky Amber Warmth',
+        desc: 'Edges begin to soften, developing a rich caramel tone across high-contact zones. Grain pores tighten under natural friction.',
+        filter: 'brightness(0.82) contrast(1.15) sepia(0.25) saturate(1.1)'
+      },
+      {
+        year: 'YEAR 5',
+        title: 'Burnished Deep Cognac',
+        desc: 'Deep luster with glassy burnished edges. The leather has molded perfectly to your daily card setup.',
+        filter: 'brightness(0.75) contrast(1.25) sepia(0.5) saturate(1.25)'
+      },
+      {
+        year: 'YEAR 10',
+        title: 'Heirloom Mahogany Antique',
+        desc: 'Fully developed vintage patina with unique character marks. Indestructible saddle stitching holding firm after a decade of use.',
+        filter: 'brightness(0.65) contrast(1.35) sepia(0.7) saturate(1.4)'
+      }
+    ];
+
+    function updatePatina(step) {
+      const data = patinaData[step];
+      patinaImg.style.filter = data.filter;
+      patinaYearBadge.textContent = data.year;
+      patinaTitle.textContent = data.title;
+      patinaBody.textContent = data.desc;
+
+      patinaYearSteps.forEach((s, idx) => {
+        s.classList.toggle('active', idx === parseInt(step));
+      });
+    }
+
+    patinaSlider.addEventListener('input', (e) => {
+      updatePatina(e.target.value);
+    });
+
+    patinaYearSteps.forEach(stepBtn => {
+      stepBtn.addEventListener('click', () => {
+        const step = stepBtn.dataset.step;
+        patinaSlider.value = step;
+        updatePatina(step);
+      });
+    });
+
+    // 9. X-Ray Divider Drag Logic
+    const xrayBox = document.getElementById('xray-box');
+    const xrayBlueprint = document.getElementById('xray-blueprint');
+    const xrayDivider = document.getElementById('xray-divider');
+    let isDraggingXray = false;
+
+    function moveXray(x) {
+      const rect = xrayBox.getBoundingClientRect();
+      let pos = (x - rect.left) / rect.width;
+      if (pos < 0.05) pos = 0.05;
+      if (pos > 0.95) pos = 0.95;
+
+      const pct = pos * 100;
+      xrayDivider.style.left = pct + '%';
+      xrayBlueprint.style.clipPath = `polygon(0 0, ${pct}% 0, ${pct}% 100%, 0 100%)`;
+    }
+
+    xrayBox.addEventListener('mousedown', (e) => {
+      isDraggingXray = true;
+      moveXray(e.clientX);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDraggingXray) return;
+      moveXray(e.clientX);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDraggingXray = false;
+    });
+
+    // 10. Material Section Scroll Reveals
+    gsap.fromTo('#material-img', 
+      { y: '-10%', scale: 1.2 },
+      {
+        y: '10%',
+        scale: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.material-section',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      }
+    );
+
+    const reveals = [
+      { selector: '.gsap-reveal-eyebrow', y: 30 },
+      { selector: '.gsap-reveal-title', y: 50 },
+      { selector: '.gsap-reveal-text', y: 40 },
+      { selector: '.gsap-reveal-stats', y: 40 }
+    ];
+
+    reveals.forEach(({ selector, y }) => {
+      gsap.fromTo(selector, 
+        { opacity: 0, y },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: selector,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+
+    // 11. Pinned Craft Section — Image Sequence & Caption Scrubbing
+    const craftPinWrapper = document.querySelector('.craft-pin-wrapper');
+    const stageImages = document.querySelectorAll('.craft-stage-img');
+    const slideTexts = document.querySelectorAll('.craft-slide-text');
+    const stepCounter = document.getElementById('craft-step-num');
+    const progressFill = document.getElementById('craft-progress');
+
+    const totalSteps = stageImages.length;
+
+    ScrollTrigger.create({
+      trigger: craftPinWrapper,
+      start: 'top top',
+      end: () => `+=${window.innerHeight * 3}`,
+      pin: true,
+      scrub: 0.5,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const currentStep = Math.min(
+          Math.floor(progress * totalSteps),
+          totalSteps - 1
+        );
+
+        progressFill.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+        stepCounter.textContent = `0${currentStep + 1} / 0${totalSteps}`;
+
+        stageImages.forEach((img, idx) => {
+          if (idx === currentStep) {
+            img.classList.add('active');
+          } else {
+            img.classList.remove('active');
+          }
+        });
+
+        slideTexts.forEach((text, idx) => {
+          if (idx === currentStep) {
+            text.classList.add('active');
+          } else {
+            text.classList.remove('active');
+          }
+        });
+      }
+    });
+
+    // 12. Monogram Foil Switcher & Acquisition Drawer Controls
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const ctaButton = document.getElementById('cta-button');
+    const headerReserveBtn = document.getElementById('header-reserve-btn');
+    const drawerClose = document.getElementById('drawer-close');
+    const monogramInput = document.getElementById('monogram-input');
+    const monogramPreview = document.getElementById('monogram-preview');
+    const foilOpts = document.querySelectorAll('.foil-opt');
+    const drawerConfirm = document.getElementById('drawer-confirm');
+
+    function openDrawer(e) {
+      if (e) e.preventDefault();
+      initAudio();
+      playChime();
+      drawerBackdrop.classList.add('active');
+      lenis.stop();
+    }
+
+    function closeDrawer() {
+      drawerBackdrop.classList.remove('active');
+      lenis.start();
+    }
+
+    ctaButton.addEventListener('click', openDrawer);
+    headerReserveBtn.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+
+    drawerBackdrop.addEventListener('click', (e) => {
+      if (e.target === drawerBackdrop) closeDrawer();
+    });
+
+    monogramInput.addEventListener('input', (e) => {
+      const val = e.target.value.toUpperCase();
+      monogramPreview.textContent = val.split('').join('.') || '—';
+    });
+
+    foilOpts.forEach(btn => {
+      btn.addEventListener('click', () => {
+        foilOpts.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const foil = btn.dataset.foil;
+
+        monogramPreview.className = `preview-foil-text ${foil}`;
+      });
+    });
+
+    drawerConfirm.addEventListener('click', () => {
+      drawerConfirm.textContent = 'RESERVING ATELIER UNIT #042...';
+      drawerConfirm.style.backgroundColor = '#d8b843';
+
+      setTimeout(() => {
+        alert('Unit #042 successfully reserved. Welcome to Meridian Atelier.');
+        closeDrawer();
+        drawerConfirm.textContent = 'PROCEED TO ATELIER CHECKOUT';
+        drawerConfirm.style.backgroundColor = 'var(--accent-gold)';
+      }, 1200);
+    });
+
+    // 13. Ateliers Live World Clocks
+    function updateWorldClocks() {
+      const now = new Date();
+
+      const formatTime = (timeZone) => {
+        return new Intl.DateTimeFormat('en-US', {
+          timeZone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        }).format(now);
+      };
+
+      document.getElementById('time-paris').textContent = `${formatTime('Europe/Paris')} CEST`;
+      document.getElementById('time-tokyo').textContent = `${formatTime('Asia/Tokyo')} JST`;
+      document.getElementById('time-ny').textContent = `${formatTime('America/New_York')} EDT`;
+    }
+
+    setInterval(updateWorldClocks, 1000);
+    updateWorldClocks();
+  </script>
+</body>
+</html>
