@@ -674,10 +674,74 @@
       line-height: 1.45;
     }
 
+    /* EXPLODED ARCHITECTURE FLOATING LAYERS SECTION */
+    .exploded-section {
+      padding: 16vh 6vw;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .exploded-stage {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+
+    .exploded-layers-container {
+      position: relative;
+      width: 320px;
+      height: 440px;
+      transform-style: preserve-3d;
+      transform: rotateX(55deg) rotateZ(-35deg);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .exploded-layer-card {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 24, 22, 0.9);
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+      will-change: transform;
+    }
+
+    .layer-1 { transform: translateZ(0px); }
+    .layer-2 { transform: translateZ(60px); background: rgba(35, 30, 25, 0.85); }
+    .layer-3 { transform: translateZ(120px); border-color: rgba(197, 155, 39, 0.6); background: rgba(10, 15, 25, 0.9); }
+    .layer-4 { transform: translateZ(180px); }
+
+    .exploded-stage:hover .layer-1 { transform: translateZ(-40px); }
+    .exploded-stage:hover .layer-2 { transform: translateZ(40px); }
+    .exploded-stage:hover .layer-3 { transform: translateZ(140px); }
+    .exploded-stage:hover .layer-4 { transform: translateZ(220px); }
+
+    .layer-title {
+      font-family: var(--font-serif-hero);
+      font-size: 1.4rem;
+      color: var(--accent-gold);
+    }
+
+    .layer-subtitle {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
     /* PATINA OVER TIME AGING SIMULATOR SECTION */
     .patina-section {
       padding: 16vh 6vw;
-      background-color: var(--bg-surface);
+      background-color: var(--bg-dark);
       border-top: 1px solid var(--border-subtle);
       border-bottom: 1px solid var(--border-subtle);
     }
@@ -801,86 +865,6 @@
       font-size: 0.95rem;
       line-height: 1.7;
       color: var(--text-muted);
-    }
-
-    /* X-RAY ARCHITECTURE INSPECTOR */
-    .xray-section {
-      padding: 16vh 6vw;
-      background-color: var(--bg-dark);
-    }
-
-    .xray-container {
-      position: relative;
-      width: 100%;
-      height: 70vh;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid var(--border-subtle);
-      user-select: none;
-    }
-
-    .xray-layer {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .xray-layer.photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .xray-layer.blueprint {
-      background-color: #060910;
-      background-image: radial-gradient(rgba(197, 155, 39, 0.15) 1px, transparent 1px);
-      background-size: 24px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem;
-      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-    }
-
-    .blueprint-svg-schematic {
-      width: 80%;
-      max-width: 600px;
-      stroke: var(--accent-gold);
-      stroke-width: 1.2;
-      fill: none;
-      opacity: 0.85;
-    }
-
-    .xray-divider {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 2px;
-      background: var(--accent-gold);
-      cursor: ew-resize;
-      z-index: 30;
-      transform: translateX(-50%);
-      box-shadow: 0 0 20px var(--accent-gold-glow);
-    }
-
-    .xray-divider-handle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--accent-gold);
-      color: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      box-shadow: 0 0 30px var(--accent-gold-glow);
     }
 
     /* Pinned Craft Section ("The Craft") */
@@ -1065,93 +1049,6 @@
       color: var(--accent-gold);
     }
 
-    /* Details Section ("The Details") */
-    .details-section {
-      padding: 20vh 6vw;
-      background-color: var(--bg-surface);
-    }
-
-    .details-header {
-      margin-bottom: 10vh;
-      max-width: 48rem;
-    }
-
-    .details-title {
-      font-family: var(--font-serif-display);
-      font-size: clamp(3rem, 5.5vw, 5.6rem);
-      line-height: 1.02;
-      font-weight: 300;
-      color: var(--text-cream);
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2.5vw;
-    }
-
-    .detail-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      padding: 3rem 2.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 480px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.4s ease, transform 0.4s ease;
-    }
-
-    .detail-card:hover {
-      border-color: var(--border-gold);
-      transform: translateY(-8px);
-    }
-
-    .card-num {
-      font-family: var(--font-serif-hero);
-      font-size: 1.6rem;
-      font-style: italic;
-      color: var(--accent-gold);
-      margin-bottom: 2rem;
-    }
-
-    .card-img-preview {
-      width: 100%;
-      height: 180px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-      border-radius: 4px;
-      position: relative;
-    }
-
-    .card-img-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.85);
-      transition: transform 0.6s ease, filter 0.8s ease;
-    }
-
-    .detail-card:hover .card-img-preview img {
-      transform: scale(1.08);
-    }
-
-    .card-title {
-      font-family: var(--font-serif-display);
-      font-size: 1.9rem;
-      font-weight: 400;
-      color: var(--text-cream);
-      margin-bottom: 1rem;
-    }
-
-    .card-body {
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: var(--text-muted);
-    }
-
     /* Final CTA Section */
     .cta-section {
       padding: 25vh 6vw 15vh 6vw;
@@ -1248,7 +1145,7 @@
       top: 0;
       right: 0;
       width: 100%;
-      max-width: 540px;
+      max-width: 560px;
       height: 100vh;
       background: var(--bg-surface);
       border-left: 1px solid var(--border-gold);
@@ -1299,6 +1196,37 @@
       display: flex;
       flex-direction: column;
       gap: 2rem;
+    }
+
+    /* Limited Edition Unit Selector */
+    .unit-selector-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .unit-pills {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .unit-pill {
+      padding: 0.6rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-family: monospace;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .unit-pill.active {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: rgba(197, 155, 39, 0.12);
     }
 
     .monogram-input-group {
@@ -1550,9 +1478,10 @@
     <a href="#" class="brand-logo magnetic-target">MERIDIAN</a>
     <ul class="nav-links">
       <li><a href="#material" class="nav-link magnetic-target">01. LEATHER</a></li>
-      <li><a href="#patina" class="nav-link magnetic-target">02. AGING</a></li>
-      <li><a href="#craft" class="nav-link magnetic-target">03. CRAFT</a></li>
-      <li><a href="#unboxing" class="nav-link magnetic-target">04. UNBOXING</a></li>
+      <li><a href="#architecture" class="nav-link magnetic-target">02. ARCHITECTURE</a></li>
+      <li><a href="#patina" class="nav-link magnetic-target">03. AGING</a></li>
+      <li><a href="#craft" class="nav-link magnetic-target">04. CRAFT</a></li>
+      <li><a href="#unboxing" class="nav-link magnetic-target">05. UNBOXING</a></li>
     </ul>
 
     <div class="header-actions">
@@ -1659,10 +1588,39 @@
       </div>
     </section>
 
+    <!-- SECTION: EXPLODED ARCHITECTURE FLOATING LAYERS -->
+    <section class="exploded-section" id="architecture">
+      <div class="details-header" style="margin-bottom: 4vh;">
+        <span class="eyebrow gsap-reveal-eyebrow">02 / EXPLODED ARCHITECTURE</span>
+        <h2 class="details-title gsap-reveal-title">Hover to float structural layers.</h2>
+      </div>
+
+      <div class="exploded-stage">
+        <div class="exploded-layers-container">
+          <div class="exploded-layer-card layer-1">
+            <span class="layer-subtitle">LAYER 01 / EXTERIOR</span>
+            <h3 class="layer-title">French Calfskin Hide</h3>
+          </div>
+          <div class="exploded-layer-card layer-2">
+            <span class="layer-subtitle">LAYER 02 / INNER BAY</span>
+            <h3 class="layer-title">Nubuck Suede Liner</h3>
+          </div>
+          <div class="exploded-layer-card layer-3">
+            <span class="layer-subtitle">LAYER 03 / BARRIER</span>
+            <h3 class="layer-title">Copper RFID Mesh</h3>
+          </div>
+          <div class="exploded-layer-card layer-4">
+            <span class="layer-subtitle">LAYER 04 / SEAM</span>
+            <h3 class="layer-title">Waxed Saddle Thread</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION: PATINA OVER TIME AGING SIMULATOR -->
     <section class="patina-section" id="patina">
       <div class="patina-header">
-        <span class="eyebrow gsap-reveal-eyebrow">02 / LEATHER CHRONOLOGY</span>
+        <span class="eyebrow gsap-reveal-eyebrow">03 / LEATHER CHRONOLOGY</span>
         <h2 class="details-title gsap-reveal-title">
           Designed to age with distinction.
         </h2>
@@ -1697,35 +1655,6 @@
       </div>
     </section>
 
-    <!-- SECTION: X-RAY ARCHITECTURAL SCHEMATIC -->
-    <section class="xray-section">
-      <div class="details-header" style="margin-bottom: 4vh;">
-        <span class="eyebrow gsap-reveal-eyebrow">INTERNAL SCHEMATIC</span>
-        <h2 class="details-title gsap-reveal-title">Hidden structural engineering.</h2>
-      </div>
-
-      <div class="xray-container" id="xray-box">
-        <div class="xray-layer photo">
-          <img src="assets/hero.png" alt="Meridian Wallet Physical Form">
-        </div>
-
-        <div class="xray-layer blueprint" id="xray-blueprint">
-          <svg class="blueprint-svg-schematic" viewBox="0 0 400 300">
-            <rect x="50" y="40" width="300" height="220" rx="12" stroke="#c59b27" stroke-dasharray="4 4" />
-            <path d="M 60 90 L 340 90 M 60 140 L 340 140 M 60 190 L 340 190" stroke="#c59b27" opacity="0.6"/>
-            <circle cx="200" cy="150" r="45" stroke="#c59b27" opacity="0.8"/>
-            <text x="145" y="154" fill="#c59b27" font-size="10" font-family="monospace" letter-spacing="2">RFID COPPER SHIELD</text>
-            <path d="M 50 40 L 50 260 M 350 40 L 350 260" stroke="#c59b27" stroke-width="2"/>
-            <text x="60" y="245" fill="#9e998e" font-size="8" font-family="sans-serif">WAXED SADDLE THREAD: 0.6mm</text>
-          </svg>
-        </div>
-
-        <div class="xray-divider" id="xray-divider">
-          <div class="xray-divider-handle">&harr;</div>
-        </div>
-      </div>
-    </section>
-
     <!-- SECTION 3: THE CRAFT (Pinned Scrub Section) -->
     <section class="craft-pin-wrapper" id="craft">
       <div class="craft-inner">
@@ -1740,7 +1669,7 @@
 
         <!-- Right Column: Text Information Scrubbing -->
         <div class="craft-info-stage">
-          <span class="eyebrow">03 / ARCHITECTURAL CRAFT</span>
+          <span class="eyebrow">04 / ARCHITECTURAL CRAFT</span>
           <span class="craft-step-counter" id="craft-step-num">01 / 04</span>
 
           <div class="craft-card-content">
@@ -1784,7 +1713,7 @@
     <!-- SECTION: THE UNBOXING EXPERIENCE -->
     <section class="unboxing-section" id="unboxing">
       <div class="details-header">
-        <span class="eyebrow gsap-reveal-eyebrow">04 / THE PRESENTATION</span>
+        <span class="eyebrow gsap-reveal-eyebrow">05 / THE PRESENTATION</span>
         <h2 class="details-title gsap-reveal-title">Unboxing the heirloom.</h2>
       </div>
 
@@ -1806,7 +1735,7 @@
             <p class="unboxing-desc">
               Includes an individually numbered Atelier certificate signed by the master leather artisan.
             </p>
-            <div class="unboxing-serial-box">CERT # MER-2026-042</div>
+            <div class="unboxing-serial-box" id="unboxing-unit-cert">CERT # MER-2026-042</div>
           </div>
         </div>
 
@@ -1888,6 +1817,18 @@
       </div>
 
       <div class="drawer-body">
+        <!-- Numbered Unit Selector -->
+        <div class="unit-selector-wrapper">
+          <span class="input-label">SELECT LIMITED EDITION UNIT NUMBER (001-250):</span>
+          <div class="unit-pills">
+            <button class="unit-pill active magnetic-target" data-unit="042">#042 — Available</button>
+            <button class="unit-pill magnetic-target" data-unit="007">#007 — Available</button>
+            <button class="unit-pill magnetic-target" data-unit="088">#088 — Available</button>
+            <button class="unit-pill magnetic-target" data-unit="100">#100 — Available</button>
+            <button class="unit-pill magnetic-target" data-unit="250">#250 — Final Unit</button>
+          </div>
+        </div>
+
         <div class="monogram-input-group">
           <span class="input-label">PERSONALIZED INITIALS (UP TO 3 LETTERS):</span>
           <input type="text" class="monogram-field" id="monogram-input" maxlength="3" value="AV" placeholder="M.R">
@@ -1909,7 +1850,7 @@
 
         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
           <div class="checkout-summary-row">
-            <span>MERIDIAN NO. 1 (COGNAC)</span>
+            <span id="drawer-item-title">MERIDIAN NO. 1 (UNIT #042)</span>
             <span>$380.00</span>
           </div>
           <div class="checkout-summary-row">
@@ -2292,38 +2233,7 @@
       });
     });
 
-    // 9. X-Ray Divider Drag Logic
-    const xrayBox = document.getElementById('xray-box');
-    const xrayBlueprint = document.getElementById('xray-blueprint');
-    const xrayDivider = document.getElementById('xray-divider');
-    let isDraggingXray = false;
-
-    function moveXray(x) {
-      const rect = xrayBox.getBoundingClientRect();
-      let pos = (x - rect.left) / rect.width;
-      if (pos < 0.05) pos = 0.05;
-      if (pos > 0.95) pos = 0.95;
-
-      const pct = pos * 100;
-      xrayDivider.style.left = pct + '%';
-      xrayBlueprint.style.clipPath = `polygon(0 0, ${pct}% 0, ${pct}% 100%, 0 100%)`;
-    }
-
-    xrayBox.addEventListener('mousedown', (e) => {
-      isDraggingXray = true;
-      moveXray(e.clientX);
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDraggingXray) return;
-      moveXray(e.clientX);
-    });
-
-    window.addEventListener('mouseup', () => {
-      isDraggingXray = false;
-    });
-
-    // 10. Material Section Scroll Reveals
+    // 9. Material Section Scroll Reveals
     gsap.fromTo('#material-img', 
       { y: '-10%', scale: 1.2 },
       {
@@ -2363,7 +2273,7 @@
       );
     });
 
-    // 11. Pinned Craft Section — Image Sequence & Caption Scrubbing
+    // 10. Pinned Craft Section — Image Sequence & Caption Scrubbing
     const craftPinWrapper = document.querySelector('.craft-pin-wrapper');
     const stageImages = document.querySelectorAll('.craft-stage-img');
     const slideTexts = document.querySelectorAll('.craft-slide-text');
@@ -2406,7 +2316,7 @@
       }
     });
 
-    // 12. Monogram Foil Switcher & Acquisition Drawer Controls
+    // 11. Limited Edition Unit Picker & Monogram Acquisition Drawer Controls
     const drawerBackdrop = document.getElementById('drawer-backdrop');
     const ctaButton = document.getElementById('cta-button');
     const headerReserveBtn = document.getElementById('header-reserve-btn');
@@ -2414,7 +2324,23 @@
     const monogramInput = document.getElementById('monogram-input');
     const monogramPreview = document.getElementById('monogram-preview');
     const foilOpts = document.querySelectorAll('.foil-opt');
+    const unitPills = document.querySelectorAll('.unit-pill');
+    const drawerItemTitle = document.getElementById('drawer-item-title');
+    const unboxingUnitCert = document.getElementById('unboxing-unit-cert');
     const drawerConfirm = document.getElementById('drawer-confirm');
+
+    let selectedUnit = '042';
+
+    unitPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        unitPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        selectedUnit = pill.dataset.unit;
+
+        drawerItemTitle.textContent = `MERIDIAN NO. 1 (UNIT #${selectedUnit})`;
+        unboxingUnitCert.textContent = `CERT # MER-2026-${selectedUnit}`;
+      });
+    });
 
     function openDrawer(e) {
       if (e) e.preventDefault();
@@ -2453,18 +2379,18 @@
     });
 
     drawerConfirm.addEventListener('click', () => {
-      drawerConfirm.textContent = 'RESERVING ATELIER UNIT #042...';
+      drawerConfirm.textContent = `RESERVING ATELIER UNIT #${selectedUnit}...`;
       drawerConfirm.style.backgroundColor = '#d8b843';
 
       setTimeout(() => {
-        alert('Unit #042 successfully reserved. Welcome to Meridian Atelier.');
+        alert(`Unit #${selectedUnit} successfully reserved. Certificate #MER-2026-${selectedUnit} registered to your name.`);
         closeDrawer();
         drawerConfirm.textContent = 'PROCEED TO ATELIER CHECKOUT';
         drawerConfirm.style.backgroundColor = 'var(--accent-gold)';
       }, 1200);
     });
 
-    // 13. Ateliers Live World Clocks
+    // 12. Ateliers Live World Clocks
     function updateWorldClocks() {
       const now = new Date();
 
