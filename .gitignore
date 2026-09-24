@@ -7,3 +7,11 @@
 .claude-flow/sessions/
 
 .vercel
+
+# Agent tooling runtime state
+ruvector.db
+.swarm/
+node_modules/
+test-results/
+playwright-report/
+.npm/
