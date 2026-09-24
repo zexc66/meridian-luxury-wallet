@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T00:00:00Z",
+  "title": "Design System: MERIDIAN",
+  "extensions": {
+    "colorMeta": {
+      "accent-gold": {
+        "role": "primary",
+        "displayName": "Oak-Bark Gold",
+        "canonical": "#c59b27",
+        "tonalRamp": ["#241c06", "#4a3a12", "#6b5520", "#8d7226", "#c59b27", "#d8b04a", "#e8ca7c", "#f5e6b8"]
+      },
+      "accent-cognac": {
+        "role": "secondary",
+        "displayName": "Cognac Hide",
+        "canonical": "#a86538",
+        "tonalRamp": ["#241209", "#4a2a17", "#6f4022", "#95562e", "#a86538", "#c07c4e", "#d49a71", "#e9c0a0"]
+      },
+      "bg-dark": {
+        "role": "neutral",
+        "displayName": "Tannery Black",
+        "canonical": "#0b0a09",
+        "tonalRamp": ["#050403", "#0b0a09", "#141311", "#1a1816", "#252220", "#332f2c", "#45403c", "#5c5651"]
+      },
+      "bg-surface": {
+        "role": "neutral",
+        "displayName": "Bench Surface",
+        "canonical": "#141311",
+        "tonalRamp": ["#060505", "#141311", "#221f1d", "#302c29", "#403b37", "#524c47", "#655e58", "#7a726b"]
+      },
+      "bg-card": {
+        "role": "neutral",
+        "displayName": "Leather Card",
+        "canonical": "#1a1816",
+        "tonalRamp": ["#080706", "#1a1816", "#282522", "#37332f", "#47423c", "#58524b", "#6b645c", "#807870"]
+      },
+      "text-cream": {
+        "role": "neutral",
+        "displayName": "Vellum Cream",
+        "canonical": "#f6f3eb",
+        "tonalRamp": ["#2b2a26", "#4a4842", "#6b6962", "#8f8c83", "#b5b2a8", "#d4d1c6", "#e9e6dc", "#f6f3eb"]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Aged Linen",
+        "canonical": "#9e998e",
+        "tonalRamp": ["#201f1c", "#3d3b37", "#5c5a53", "#7b786f", "#9e998e", "#b5b1a6", "#cdc9bf", "#e5e2d9"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero and CTA statements only; second line italic gold." },
+      "headline": { "displayName": "Headline", "purpose": "Section headlines and pull-quotes." },
+      "title": { "displayName": "Title", "purpose": "Card and drawer headings." },
+      "body": { "displayName": "Body", "purpose": "Editorial paragraphs, max ~62ch." },
+      "label": { "displayName": "Label", "purpose": "Uppercase letterspaced eyebrows, tags, captions — the whisper register." }
+    },
+    "shadows": [
+      { "name": "gold-halo", "value": "0 0 40px rgba(197,155,39,0.25)", "purpose": "Primary CTA only — the single candle in the room." },
+      { "name": "title-atmosphere", "value": "text-shadow: 0 4px 44px rgba(11,10,9,0.55)", "purpose": "Legibility bloom behind display type over photography." }
+    ],
+    "motion": [
+      { "name": "ease-luxury", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Default for all state transitions and reveals — heavy, decelerating." },
+      { "name": "ease-exit", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Exits and unpinning." },
+      { "name": "ease-drift", "value": "cubic-bezier(0.45, 0, 0.55, 1)", "purpose": "Perpetual ambient loops (Ken Burns drift)." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single glowing action — gold pill with arrow, magnetic on the live site.",
+      "html": "<button class=\"ds-btn-primary\">ACQUIRE MERIDIAN NO. 1 — $380 <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 1.5rem; padding: 1.6rem 4rem; background: var(--accent-gold, #c59b27); color: #000; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; border: none; border-radius: 60px; box-shadow: 0 0 40px rgba(197,155,39,0.25); cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; } .ds-btn-primary:hover { box-shadow: 0 0 60px rgba(197,155,39,0.4); transform: translateY(-2px); } .ds-btn-primary:focus-visible { outline: 1px solid #c59b27; outline-offset: 4px; }"
+    },
+    {
+      "name": "Island CTA",
+      "kind": "button",
+      "refersTo": "button-island",
+      "description": "Hero pill with nested trailing orb; gold floods the pill on hover.",
+      "html": "<button class=\"ds-btn-island\">ACQUIRE NO. 1 <span class=\"ds-island-orb\">&#8599;</span></button>",
+      "css": ".ds-btn-island { display: inline-flex; align-items: center; gap: 1.2rem; padding: 0.45rem 0.45rem 0.45rem 1.9rem; background: rgba(197,155,39,0.1); border: 1px solid rgba(197,155,39,0.55); border-radius: 999px; color: #f6f3eb; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; cursor: pointer; transition: background-color 0.7s cubic-bezier(0.32,0.72,0,1), border-color 0.7s cubic-bezier(0.32,0.72,0,1), color 0.7s cubic-bezier(0.32,0.72,0,1); } .ds-btn-island:hover { background: #c59b27; border-color: #c59b27; color: #0b0a09; } .ds-btn-island:focus-visible { outline: 1px solid #c59b27; outline-offset: 4px; } .ds-island-orb { display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: rgba(197,155,39,0.14); border: 1px solid rgba(197,155,39,0.3); color: #c59b27; font-size: 0.85rem; line-height: 1; transition: transform 0.7s cubic-bezier(0.32,0.72,0,1), background-color 0.7s cubic-bezier(0.32,0.72,0,1), color 0.7s cubic-bezier(0.32,0.72,0,1); } .ds-btn-island:hover .ds-island-orb { transform: translate(2px, -2px) scale(1.06); background: rgba(11,10,9,0.14); color: #0b0a09; }"
+    },
+    {
+      "name": "Ledger Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Rectangular hairline card; border warms to gold with a quiet lift on hover.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-card-tag\">ITEM 01</span><h3 class=\"ds-card-title\">Archival Cedar Box</h3><p class=\"ds-card-body\">Crafted from Japanese cedarwood. Naturally aroma-sealed for lifelong preservation.</p></div>",
+      "css": ".ds-card { background: var(--bg-card, #1a1816); border: 1px solid rgba(246,243,235,0.08); border-radius: 6px; padding: 3rem 2rem; max-width: 34ch; transition: border-color 0.4s ease, transform 0.4s ease; } .ds-card:hover { border-color: rgba(197,155,39,0.35); transform: translateY(-6px); } .ds-card-tag { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #c59b27; margin-bottom: 1.5rem; } .ds-card-title { font-family: 'Bodoni Moda', Georgia, serif; font-size: 2rem; font-weight: 400; color: #f6f3eb; margin: 0 0 1rem; } .ds-card-body { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 300; line-height: 1.7; color: #9e998e; margin: 0; }"
+    },
+    {
+      "name": "Filled Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Drawer input — serif, letterspaced, focus shifts the border to gold only.",
+      "html": "<input type=\"text\" class=\"ds-input-filled\" placeholder=\"M.R\" aria-label=\"Monogram initials\" maxlength=\"3\">",
+      "css": ".ds-input-filled { background: var(--bg-card, #1a1816); border: 1px solid rgba(246,243,235,0.08); color: #f6f3eb; padding: 1rem 1.2rem; border-radius: 4px; font-family: 'Instrument Serif', Georgia, serif; font-size: 1.4rem; letter-spacing: 0.3em; text-transform: uppercase; outline: none; transition: border-color 0.3s ease; } .ds-input-filled:focus { border-color: #c59b27; } .ds-input-filled::placeholder { color: rgba(158,153,142,0.5); }"
+    },
+    {
+      "name": "Underline Field",
+      "kind": "input",
+      "refersTo": "input-underline",
+      "description": "Waitlist input — transparent ground, gold hairline that brightens on focus.",
+      "html": "<input type=\"email\" class=\"ds-input-underline\" placeholder=\"your@email.com\" aria-label=\"Email\">",
+      "css": ".ds-input-underline { background: none; border: none; border-bottom: 1px solid rgba(197,155,39,0.35); padding: 0.8rem 0.2rem; color: #f6f3eb; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.06em; outline: none; min-width: 220px; } .ds-input-underline:focus { border-bottom-color: #c59b27; } .ds-input-underline::placeholder { color: rgba(158,153,142,0.6); }"
+    },
+    {
+      "name": "Swatch Chips",
+      "kind": "chip",
+      "refersTo": "chip-swatch",
+      "description": "20px leather-tone circles; active wears the gold ring.",
+      "html": "<div class=\"ds-swatches\"><button class=\"ds-swatch ds-swatch-active\" aria-label=\"Cognac Antique\"></button><button class=\"ds-swatch ds-swatch-noir\" aria-label=\"Noir Intense\"></button><button class=\"ds-swatch ds-swatch-espresso\" aria-label=\"Espresso Raw\"></button></div>",
+      "css": ".ds-swatches { display: flex; gap: 0.8rem; padding: 1rem; background: #0b0a09; } .ds-swatch { width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; } .ds-swatch:hover { transform: scale(1.15); } .ds-swatch-active { background: #a86538; border-color: #c59b27; box-shadow: 0 0 12px rgba(197,155,39,0.35); } .ds-swatch-noir { background: #171412; } .ds-swatch-espresso { background: #4a2f1d; }"
+    },
+    {
+      "name": "Certificate Plate",
+      "kind": "custom",
+      "refersTo": "certificate",
+      "description": "Signature component — double-framed provenance plate with live cert number and monogram.",
+      "html": "<div class=\"ds-cert\"><span class=\"ds-cert-heading\">CERTIFICATE OF PROVENANCE</span><span class=\"ds-cert-number\">MER-2026-042</span><span class=\"ds-cert-monogram\">A.V</span><span class=\"ds-cert-foot\">É. MERIDIAN — PARIS, 2026 · EDITION 01 OF 250</span></div>",
+      "css": ".ds-cert { position: relative; border: 1px solid rgba(197,155,39,0.35); background: rgba(197,155,39,0.04); padding: 2.4rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.7rem; } .ds-cert::after { content: ''; position: absolute; inset: 6px; border: 1px solid rgba(246,243,235,0.08); pointer-events: none; } .ds-cert-heading { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.56rem; letter-spacing: 0.42em; text-transform: uppercase; color: #c59b27; } .ds-cert-number { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.7rem; letter-spacing: 0.08em; color: #f6f3eb; } .ds-cert-monogram { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 2.1rem; color: #c59b27; } .ds-cert-foot { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; color: #9e998e; text-align: center; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Darkened Atelier",
+    "overview": "The page is a workshop after closing time. Every surface is tannery-dark; nothing glows until a hand approaches it. Depth is not drawn with shadows but with the difference between one darkness and the next — the way leather reads against a bench at night. The voice is material and sensual: the vocabulary is hide, wax, cedar, and thread, never \"features\" or \"benefits.\" Interaction is the light source. Elements lie dormant under hairline borders and muted ink; hover, focus, and scroll are what strike the match — gold blooms, magnetic pulls answer the cursor, dust drifts away from the hand. The system never begs: scarcity is whispered in letterspaced smallcaps, not shouted in badges.",
+    "keyCharacteristics": [
+      "Near-black tonal layering (three darknesses) instead of shadows",
+      "One metal — gold — rationed to ≤10% of any viewport",
+      "Massive serif display over whispered sans labels; nothing in between shouts",
+      "Hairline borders (8%-opacity cream, 35%-opacity gold) as the only structural line",
+      "Motion on transform/opacity only, at cubic-bezier(0.32, 0.72, 0, 1) — heavy, decelerating, physical"
+    ],
+    "rules": [
+      { "name": "The One Metal Rule", "body": "Gold appears on at most one glowing element and a handful of hairlines per viewport. Its rarity is the value.", "section": "colors" },
+      { "name": "The Three Darknesses Rule", "body": "Elevation is expressed only as Tannery Black → Bench Surface → Leather Card. Never add a fourth background tone or a light surface.", "section": "colors" },
+      { "name": "The Whisper Rule", "body": "The smaller the text, the wider its tracking: labels run 0.25–0.42em; body never exceeds 0.02em. Small text never drops below 0.56rem.", "section": "typography" },
+      { "name": "The Two-Serif Rule", "body": "Instrument Serif speaks, Bodoni Moda engraves, and only one may appear per section headline slot. Never set body copy in a serif.", "section": "typography" },
+      { "name": "The Single Flame Rule", "body": "At most one glowing element per viewport. If something new glows, something else must go dark.", "section": "elevation" },
+      { "name": "The Ledger-vs-Jewel Rule", "body": "Containers are ledger (rect + hairline); actions are jewel (pill + gold). Never give a card a pill corner or a button a 4px corner.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do ration gold: one glow, a few hairlines, one italic word per headline at most.",
+      "Do letterspace every uppercase label (0.25–0.42em) and keep labels ≤0.75rem.",
+      "Do use hairline borders (cream at 8% or gold at 35%) instead of fills to delineate structure.",
+      "Do animate transform and opacity only, on the luxury easing cubic-bezier(0.32, 0.72, 0, 1).",
+      "Do mark chapters by alternating Tannery Black and Bench Surface, not by dividers.",
+      "Do write in the material register — hide, wax, cedar, thread, tannage."
+    ],
+    "donts": [
+      "Don't use pure white (#fff) or pure black (#000) text; ink is Vellum Cream and only button fills go near-black.",
+      "Don't add drop shadows, gradients-as-decoration, or a second glowing element per viewport.",
+      "Don't introduce a new background tone, a fourth font, or a saturated color outside the canon.",
+      "Don't give containers pill corners or actions rectangle corners (Ledger-vs-Jewel).",
+      "Don't animate width/height/top/left, or ship motion that ignores prefers-reduced-motion.",
+      "Don't shout scarcity — no countdown timers, no red badges, no exclamation marks."
+    ]
+  }
+}
