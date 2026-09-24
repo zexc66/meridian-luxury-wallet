@@ -5,11 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MERIDIAN — Heirloom Full-Grain Leatherware</title>
   <meta name="description" content="Hand-stitched full-grain French calfskin leather wallet. An object of permanence.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="theme-color" content="#0b0a09">
+
+  <!-- Open Graph / Twitter — replace the domain with your production URL -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MERIDIAN Atelier">
+  <meta property="og:title" content="MERIDIAN — Heirloom Full-Grain Leatherware">
+  <meta property="og:description" content="Hand-stitched full-grain French calfskin. 250 numbered units. An object of permanence.">
+  <meta property="og:image" content="https://www.meridian-atelier.com/assets/hero.webp">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "MERIDIAN No. 1",
+    "brand": { "@type": "Brand", "name": "MERIDIAN" },
+    "description": "Hand-stitched full-grain French calfskin wallet. Edition of 250 numbered units with complimentary foil monogram.",
+    "material": "Full-grain French calfskin, oak-bark tanned",
+    "offers": {
+      "@type": "Offer",
+      "price": "380.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/LimitedAvailability"
+    }
+  }
+  </script>
 
   <!-- Premium Editorial Google Fonts: Instrument Serif, Bodoni Moda & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- LCP image: start fetching before CSS/JS parse -->
+  <link rel="preload" as="image" href="assets/hero.webp" fetchpriority="high">
 
   <!-- Lenis CSS -->
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
@@ -208,6 +238,12 @@
       will-change: transform;
     }
 
+    /* Hidden initial state so the hero entrance choreography actually plays */
+    .gsap-reveal-fade {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
     /* Header & Navigation */
     header {
       position: fixed;
@@ -371,6 +407,31 @@
       transition: filter 0.8s ease;
     }
 
+    /* Perpetual cinematic drift on its own layer, independent of parallax */
+    .hero-kenburns {
+      position: absolute;
+      inset: -2%;
+      will-change: transform;
+      animation: heroDrift 26s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+    }
+
+    @keyframes heroDrift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.08) translate3d(-1.2%, -0.8%, 0); }
+    }
+
+    /* Legibility scrim over the backdrop plate */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(102deg, rgba(11, 10, 9, 0.78) 0%, rgba(11, 10, 9, 0.42) 44%, rgba(11, 10, 9, 0) 68%),
+        linear-gradient(to top, rgba(11, 10, 9, 0.6) 0%, rgba(11, 10, 9, 0) 28%);
+    }
+
     .hero-canvas {
       position: absolute;
       inset: 0;
@@ -398,6 +459,7 @@
       color: var(--text-cream);
       text-transform: uppercase;
       margin-bottom: 2.5rem;
+      text-shadow: 0 4px 44px rgba(11, 10, 9, 0.55);
     }
 
     .hero-title span.gold-italic {
@@ -409,28 +471,144 @@
 
     .hero-sub {
       display: flex;
-      align-items: flex-start;
-      gap: 4rem;
+      flex-direction: column;
+      gap: 2.8rem;
       max-width: 42rem;
     }
 
     .hero-desc {
-      font-size: 1rem;
-      line-height: 1.7;
+      font-size: 1.05rem;
+      line-height: 1.75;
       color: var(--text-muted);
       font-weight: 300;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.02em;
     }
 
-    .hero-scroll-indicator {
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2.4rem;
+    }
+
+    /* Nested island CTA — flush trailing orb inside the pill */
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0.45rem 0.45rem 0.45rem 1.9rem;
+      background: rgba(197, 155, 39, 0.1);
+      border: 1px solid rgba(197, 155, 39, 0.55);
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-cream);
+      cursor: pointer;
+      transition:
+        background-color 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        border-color 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        color 0.7s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .hero-cta:hover {
+      background-color: var(--accent-gold);
+      border-color: var(--accent-gold);
+      color: var(--bg-dark);
+    }
+
+    .hero-cta:focus-visible {
+      outline: 1px solid var(--accent-gold);
+      outline-offset: 4px;
+    }
+
+    .hero-cta-orb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: rgba(197, 155, 39, 0.14);
+      border: 1px solid rgba(197, 155, 39, 0.3);
+      color: var(--accent-gold);
+      font-size: 0.85rem;
+      line-height: 1;
+      transition:
+        transform 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        background-color 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        color 0.7s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .hero-cta:hover .hero-cta-orb {
+      transform: translate(2px, -2px) scale(1.06);
+      background-color: rgba(11, 10, 9, 0.14);
+      color: var(--bg-dark);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #bab4a6;
+    }
+
+    .hero-meta-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      opacity: 0.7;
+    }
+
+    /* Vertical atelier rail, right edge */
+    .hero-side-rail {
+      position: absolute;
+      right: 4rem;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      height: max-content;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .hero-side-rail .rail-text {
+      writing-mode: vertical-rl;
+    }
+
+    .hero-side-rail .rail-line {
+      width: 1px;
+      height: 72px;
+      background: linear-gradient(to bottom, transparent, var(--border-gold), transparent);
+    }
+
+    /* Bottom-left scroll cue */
+    .hero-scroll-corner {
+      position: absolute;
+      left: 6vw;
+      bottom: 3rem;
+      z-index: 3;
       display: flex;
       align-items: center;
       gap: 1rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
+      font-size: 0.65rem;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-top: 1rem;
+      color: var(--text-muted);
     }
 
     .scroll-line {
@@ -1430,10 +1608,665 @@
     }
 
     /* Responsive Adjustments */
+    /* PRESS RECOGNITION STRIP */
+    .press-strip {
+      padding: 2.4rem 6vw;
+      background: var(--bg-dark);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .press-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+      flex: none;
+    }
+
+    .press-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1.6rem 3rem;
+      width: 100%;
+    }
+
+    .press-row span {
+      font-family: var(--font-serif-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    /* TECHNICAL CARD / SPEC SECTION */
+    .spec-section {
+      padding: 16vh 6vw;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .spec-table {
+      margin-top: 8vh;
+      max-width: 920px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 2rem;
+      padding: 1.6rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      align-items: baseline;
+    }
+
+    .spec-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .spec-val {
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      color: var(--text-cream);
+    }
+
+    .spec-caption {
+      display: block;
+      margin-top: 1.8rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+    }
+
+    /* PROVENANCE / ATELIER SECTION */
+    .provenance-section {
+      padding: 18vh 6vw;
+      background: var(--bg-dark);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .founder-signature {
+      font-family: var(--font-serif-hero);
+      font-style: italic;
+      font-size: 2rem;
+      color: var(--accent-gold);
+      margin-top: 2.5rem;
+      display: block;
+    }
+
+    .founder-title {
+      display: block;
+      margin-top: 0.6rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+    }
+
+    .provenance-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 2.6rem;
+    }
+
+    .prov-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 1.5rem;
+      padding: 1.15rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.74rem;
+      align-items: baseline;
+    }
+
+    .prov-row:last-child { border-bottom: none; }
+
+    .prov-key {
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+
+    .prov-val {
+      letter-spacing: 0.1em;
+      color: var(--text-cream);
+      line-height: 1.6;
+    }
+
+    /* GUARANTEE STRIP */
+    .guarantee-strip {
+      padding: 12vh 6vw;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3vw;
+    }
+
+    .guar-item { max-width: 34ch; }
+
+    .guar-num {
+      font-family: var(--font-serif-display);
+      font-size: 1.1rem;
+      color: var(--accent-gold);
+      letter-spacing: 0.2em;
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .guar-title {
+      font-family: var(--font-serif-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text-cream);
+      margin-bottom: 0.9rem;
+    }
+
+    .guar-desc {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .guarantee-note {
+      grid-column: 1 / -1;
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      color: var(--text-muted);
+    }
+
+    /* FAQ SECTION */
+    .faq-section {
+      padding: 16vh 6vw;
+      background: var(--bg-dark);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .faq-list {
+      margin-top: 8vh;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .faq-item { border-bottom: 1px solid var(--border-subtle); }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      padding: 2.2rem 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      color: var(--text-cream);
+    }
+
+    .faq-icon {
+      flex: none;
+      position: relative;
+      width: 14px;
+      height: 14px;
+      transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--accent-gold);
+    }
+
+    .faq-icon::before { left: 0; right: 0; top: 6.5px; height: 1px; }
+    .faq-icon::after { top: 0; bottom: 0; left: 6.5px; width: 1px; }
+
+    .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+    .faq-a {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .faq-item.active .faq-a { grid-template-rows: 1fr; }
+
+    .faq-a-inner { overflow: hidden; }
+
+    .faq-a-inner p {
+      padding-bottom: 2.2rem;
+      max-width: 62ch;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ARCHIVE + EDITION 02 WAITLIST */
+    .archive-section {
+      padding: 16vh 6vw;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4vw;
+      margin-top: 8vh;
+      align-items: start;
+    }
+
+    .archive-row {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+    }
+
+    .archive-row .arch-name {
+      font-family: var(--font-serif-display);
+      font-size: 1.45rem;
+      letter-spacing: 0.04em;
+      color: var(--text-cream);
+    }
+
+    .archive-row.past { opacity: 0.55; }
+
+    .arch-open { color: var(--accent-gold); }
+
+    .waitlist-card {
+      border: 1px solid var(--border-gold);
+      background: rgba(197, 155, 39, 0.04);
+      padding: 3rem;
+    }
+
+    .waitlist-card > p {
+      color: var(--text-muted);
+      line-height: 1.75;
+      font-size: 0.92rem;
+      margin: 1.6rem 0 2.2rem;
+    }
+
+    #waitlist-form { display: flex; gap: 1rem; }
+
+    #waitlist-email {
+      flex: 1;
+      min-width: 0;
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--border-gold);
+      padding: 0.8rem 0.2rem;
+      color: var(--text-cream);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+    }
+
+    #waitlist-email:focus { outline: none; border-bottom-color: var(--accent-gold); }
+
+    #waitlist-form button {
+      background: var(--accent-gold);
+      border: none;
+      color: var(--bg-dark);
+      padding: 0.8rem 1.6rem;
+      font-family: var(--font-sans);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      cursor: pointer;
+      transition: opacity 0.4s ease;
+    }
+
+    #waitlist-form button:disabled { opacity: 0.5; cursor: default; }
+
+    .waitlist-status {
+      display: block;
+      margin-top: 1.1rem;
+      min-height: 1em;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--accent-gold);
+    }
+
+    /* MOBILE NAVIGATION OVERLAY */
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 9900;
+      background: rgba(11, 10, 9, 0.97);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 8vw;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .mobile-nav.active { opacity: 1; pointer-events: all; }
+
+    .mobile-nav-link {
+      font-family: var(--font-serif-hero);
+      font-size: clamp(2rem, 8vw, 3.4rem);
+      text-transform: uppercase;
+      color: var(--text-cream);
+      text-decoration: none;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      transform: translateY(24px);
+      opacity: 0;
+      transition:
+        transform 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        opacity 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        color 0.4s ease;
+    }
+
+    .mobile-nav.active .mobile-nav-link { transform: none; opacity: 1; }
+
+    .mobile-nav.active .mobile-nav-link:nth-child(1) { transition-delay: 0.06s; }
+    .mobile-nav.active .mobile-nav-link:nth-child(2) { transition-delay: 0.12s; }
+    .mobile-nav.active .mobile-nav-link:nth-child(3) { transition-delay: 0.18s; }
+    .mobile-nav.active .mobile-nav-link:nth-child(4) { transition-delay: 0.24s; }
+    .mobile-nav.active .mobile-nav-link:nth-child(5) { transition-delay: 0.3s; }
+    .mobile-nav.active .mobile-nav-link:nth-child(6) { transition-delay: 0.36s; }
+
+    .mobile-nav-link:hover, .mobile-nav-link:focus-visible { color: var(--accent-gold); }
+
+    .mobile-nav-link.nav-cta { color: var(--accent-gold); }
+
+    .mobile-nav-meta {
+      position: absolute;
+      bottom: 3rem;
+      left: 8vw;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+    }
+
+    .menu-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      flex: none;
+    }
+
+    .menu-btn span {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      height: 1px;
+      background: var(--text-cream);
+      transition: top 0.5s cubic-bezier(0.32, 0.72, 0, 1), transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .menu-btn span:nth-child(1) { top: 18px; }
+    .menu-btn span:nth-child(2) { top: 26px; }
+    .menu-btn.active span:nth-child(1) { top: 22px; transform: rotate(45deg); }
+    .menu-btn.active span:nth-child(2) { top: 22px; transform: rotate(-45deg); }
+
+    /* POLICY MODAL */
+    .policy-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 5, 4, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4vh 4vw;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .policy-backdrop.active { opacity: 1; pointer-events: all; }
+
+    .policy-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-gold);
+      width: 100%;
+      max-width: 620px;
+      max-height: 82vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem;
+    }
+
+    .policy-body {
+      overflow-y: auto;
+      padding-right: 1rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+
+    .policy-body h4 {
+      color: var(--text-cream);
+      margin: 1.6rem 0 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .policy-body h4:first-child { margin-top: 0; }
+    .policy-body p { margin-bottom: 1rem; }
+
+    /* DRAWER — scarcity, certificate preview, success panel */
+    .unit-pill:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .unit-remaining {
+      display: block;
+      margin-top: 1.1rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+    }
+
+    .cert-preview {
+      position: relative;
+      border: 1px solid var(--border-gold);
+      background: rgba(197, 155, 39, 0.04);
+      padding: 2rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .cert-preview::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--border-subtle);
+      pointer-events: none;
+    }
+
+    .cert-heading {
+      font-size: 0.56rem;
+      letter-spacing: 0.42em;
+      color: var(--accent-gold);
+    }
+
+    .cert-number {
+      font-family: var(--font-serif-display);
+      font-size: 1.7rem;
+      letter-spacing: 0.08em;
+      color: var(--text-cream);
+    }
+
+    .cert-monogram { font-size: 2.1rem; }
+
+    .cert-foot {
+      font-size: 0.56rem;
+      letter-spacing: 0.28em;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .drawer-body.hidden { display: none; }
+
+    .drawer-success {
+      display: none;
+      margin: auto 0;
+      padding: 2rem 0;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.1rem;
+    }
+
+    .drawer-success.active { display: flex; }
+
+    .success-mark {
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--border-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif-display);
+      font-size: 1.6rem;
+      color: var(--accent-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .drawer-success h4 {
+      font-family: var(--font-serif-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text-cream);
+      letter-spacing: 0.05em;
+    }
+
+    .drawer-success p {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      color: var(--accent-gold);
+    }
+
+    .drawer-success .success-note {
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 34ch;
+    }
+
+    /* FOOTER additions */
+    .footer-maison, .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-col-title {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--accent-gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-link {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-align: left;
+      transition: color 0.4s ease;
+    }
+
+    .footer-link:hover { color: var(--text-cream); }
+
+    .footer-note {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      opacity: 0.8;
+    }
+
+    /* Patina owner quote */
+    .patina-state-quote {
+      font-family: var(--font-serif-hero);
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--accent-gold);
+      opacity: 0.9;
+      margin-top: 1.6rem;
+    }
+
+    /* Reduced motion: honour the OS preference */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-kenburns,
+      .scroll-line,
+      .sound-bar { animation: none !important; }
+      .unboxing-card,
+      .hero-cta-orb,
+      .faq-icon,
+      .menu-btn span { transition: none !important; }
+    }
+
+    /* Fail-safe states when animation libraries fail to load */
+    body.no-motion .custom-cursor { display: none; }
+    body.no-motion .line-mask-inner { transform: none !important; }
+    body.no-motion .gsap-reveal-fade,
+    body.no-motion .gsap-reveal-eyebrow,
+    body.no-motion .gsap-reveal-title,
+    body.no-motion .gsap-reveal-text,
+    body.no-motion .gsap-reveal-stats {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
     @media (max-width: 900px) {
       header { padding: 1.5rem 2rem; }
       .nav-links { display: none; }
       .hero-content { max-width: 100%; }
+      .hero-side-rail { display: none; }
+      .hero-scroll-corner { left: 2rem; bottom: 2rem; }
+      .hero-cta-row { gap: 1.6rem; }
+      .press-strip { flex-direction: column; gap: 1.4rem; align-items: flex-start; }
+      .press-row { justify-content: flex-start; }
+      .guarantee-strip { grid-template-columns: 1fr; gap: 3.5rem; }
+      .archive-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .spec-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      #waitlist-form { flex-direction: column; }
+      .menu-btn { display: block; }
+      .prov-row { grid-template-columns: 1fr; gap: 0.4rem; }
       .swatch-bar { bottom: 1.5rem; right: 1.5rem; }
       .editorial-grid, .patina-grid { grid-template-columns: 1fr; gap: 4rem; }
       .craft-inner { grid-template-columns: 1fr; }
@@ -1443,6 +2276,16 @@
       .acquisition-drawer { max-width: 100%; }
     }
   </style>
+
+  <!-- Keeps the page usable when JavaScript is disabled -->
+  <noscript>
+    <style>
+      .preloader,
+      .custom-cursor,
+      .custom-cursor-follower { display: none !important; }
+      .line-mask-inner { transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
 
@@ -1485,6 +2328,11 @@
     </ul>
 
     <div class="header-actions">
+      <button class="menu-btn magnetic-target" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span>
+        <span></span>
+      </button>
+
       <button class="sound-toggle-btn magnetic-target" id="sound-toggle">
         <span class="sound-wave">
           <span class="sound-bar"></span>
@@ -1498,13 +2346,26 @@
     </div>
   </header>
 
+  <!-- Mobile Navigation Overlay -->
+  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="#material" class="mobile-nav-link">01. Leather</a>
+    <a href="#architecture" class="mobile-nav-link">02. Architecture</a>
+    <a href="#patina" class="mobile-nav-link">03. Aging</a>
+    <a href="#craft" class="mobile-nav-link">04. Craft</a>
+    <a href="#unboxing" class="mobile-nav-link">05. Unboxing</a>
+    <a href="#acquire" class="mobile-nav-link nav-cta">Acquire No. 1</a>
+    <div class="mobile-nav-meta">MERIDIAN ATELIER — PARIS · TOKYO · NEW YORK</div>
+  </nav>
+
   <!-- Main Content Wrapper for Lenis -->
   <main id="main-content">
 
     <!-- HERO SECTION -->
     <section class="hero-section">
       <div class="hero-bg">
-        <img src="assets/hero.png" alt="Meridian Full Grain Leather Wallet" id="hero-img" class="leather-swatch-target">
+        <div class="hero-kenburns">
+          <img src="assets/hero.webp" alt="Meridian Full Grain Leather Wallet" id="hero-img" class="leather-swatch-target" width="1024" height="1024" decoding="async" fetchpriority="high">
+        </div>
         <canvas class="hero-canvas" id="hero-light-canvas"></canvas>
       </div>
 
@@ -1520,11 +2381,35 @@
           <p class="hero-desc">
             Hand-stitched full-grain French calfskin wallet. Engineered without synthetics, adhesives, or compromise. Designed to outlive its owner.
           </p>
-          <div class="hero-scroll-indicator">
-            <div class="scroll-line"></div>
-            <span>SCROLL TO DISCOVER</span>
+
+          <div class="hero-cta-row">
+            <button class="hero-cta magnetic-target" id="hero-cta" type="button">
+              <span class="hero-cta-label">Acquire No. 1</span>
+              <span class="hero-cta-orb" aria-hidden="true">&#8599;</span>
+            </button>
+
+            <div class="hero-meta" aria-label="Edition details">
+              <span>Edition of 250</span>
+              <span class="hero-meta-dot" aria-hidden="true"></span>
+              <span>$380</span>
+              <span class="hero-meta-dot" aria-hidden="true"></span>
+              <span>Oak-Bark Tanned</span>
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- Vertical Atelier Rail -->
+      <div class="hero-side-rail gsap-reveal-fade" aria-hidden="true">
+        <span class="rail-text">MERIDIAN ATELIER — PARIS</span>
+        <span class="rail-line"></span>
+        <span class="rail-text">EST. 2026</span>
+      </div>
+
+      <!-- Bottom-Left Scroll Cue -->
+      <div class="hero-scroll-corner gsap-reveal-fade">
+        <div class="scroll-line"></div>
+        <span>SCROLL TO DISCOVER</span>
       </div>
 
       <!-- Leather Colorway Finish Swatch Bar -->
@@ -1535,6 +2420,18 @@
           <button class="swatch-btn swatch-noir magnetic-target" data-finish="noir" title="Noir Intense"></button>
           <button class="swatch-btn swatch-espresso magnetic-target" data-finish="espresso" title="Espresso Raw"></button>
         </div>
+      </div>
+    </section>
+
+    <!-- PRESS RECOGNITION STRIP -->
+    <section class="press-strip gsap-reveal-stats" aria-label="Press recognition">
+      <span class="press-label">AS FEATURED IN</span>
+      <div class="press-row" aria-hidden="true">
+        <span>MONOCLE</span>
+        <span>ESQUIRE</span>
+        <span>GQ</span>
+        <span>PERMANENT STYLE</span>
+        <span>HYPEBEAST</span>
       </div>
     </section>
 
@@ -1567,7 +2464,7 @@
         </div>
 
         <div class="material-image-container">
-          <img src="assets/open.png" alt="Meridian Wallet Interior Card Slots" id="material-img" class="leather-swatch-target">
+          <img src="assets/open.webp" alt="Meridian Wallet Interior Card Slots" id="material-img" class="leather-swatch-target" width="1024" height="1024" loading="lazy" decoding="async">
           <span class="image-caption-tag">FIG. 01 — ANATOMY OF CARD CAVITY</span>
 
           <!-- Interactive Hotspot Annotation Pins -->
@@ -1628,7 +2525,7 @@
 
       <div class="patina-grid">
         <div class="patina-stage">
-          <img src="assets/flatlay.png" alt="Patina Aging Preview" id="patina-img">
+          <img src="assets/flatlay.webp" alt="Patina Aging Preview" id="patina-img" width="1024" height="1024" loading="lazy" decoding="async">
           <div class="patina-badge" id="patina-year-badge">DAY 1</div>
         </div>
 
@@ -1650,6 +2547,7 @@
             <p class="patina-desc-body" id="patina-state-body">
               Unblemished natural full-grain surface. Smooth matte texture with soft honey highlights ready to absorb oils from daily handling.
             </p>
+            <p class="patina-state-quote" id="patina-state-quote" aria-live="polite"></p>
           </div>
         </div>
       </div>
@@ -1661,10 +2559,10 @@
 
         <!-- Left Column: Stacked Images -->
         <div class="craft-image-stage">
-          <img src="assets/hero.png" alt="Meridian Hero Angle" class="craft-stage-img active leather-swatch-target" data-step="0">
-          <img src="assets/open.png" alt="Meridian Interior View" class="craft-stage-img leather-swatch-target" data-step="1">
-          <img src="assets/flatlay.png" alt="Meridian Flatlay Geometry" class="craft-stage-img leather-swatch-target" data-step="2">
-          <img src="assets/macro.png" alt="Meridian Hand Stitch Detail" class="craft-stage-img leather-swatch-target" data-step="3">
+            <img src="assets/hero.webp" alt="Meridian Hero Angle" class="craft-stage-img active leather-swatch-target" data-step="0" width="1024" height="1024" loading="lazy" decoding="async">
+            <img src="assets/open.webp" alt="Meridian Interior View" class="craft-stage-img leather-swatch-target" data-step="1" width="1024" height="1024" loading="lazy" decoding="async">
+            <img src="assets/flatlay.webp" alt="Meridian Flatlay Geometry" class="craft-stage-img leather-swatch-target" data-step="2" width="1024" height="1024" loading="lazy" decoding="async">
+            <img src="assets/macro.webp" alt="Meridian Hand Stitch Detail" class="craft-stage-img leather-swatch-target" data-step="3" width="1024" height="1024" loading="lazy" decoding="async">
         </div>
 
         <!-- Right Column: Text Information Scrubbing -->
@@ -1710,6 +2608,43 @@
       </div>
     </section>
 
+    <!-- SECTION: TECHNICAL CARD -->
+    <section class="spec-section" id="spec">
+      <div class="details-header">
+        <span class="eyebrow gsap-reveal-eyebrow">APPENDIX / TECHNICAL CARD</span>
+        <h2 class="details-title gsap-reveal-title">Measured, not marketed.</h2>
+      </div>
+
+      <div class="spec-table gsap-reveal-stats">
+        <div class="spec-row">
+          <span class="spec-label">Dimensions</span>
+          <span class="spec-val">110 × 85 × 8 MM — CLOSED</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Weight</span>
+          <span class="spec-val">48 GRAMS</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Capacity</span>
+          <span class="spec-val">6 CARDS + FOLDED NOTES — CASH STRAP IN COGNAC</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Hide</span>
+          <span class="spec-val">0.8 MM FULL-GRAIN FRENCH CALFSKIN, OAK-BARK TANNED</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Thread</span>
+          <span class="spec-val">WAXED LINEN, TWO-NEEDLE SADDLE STITCH — 7 SPI</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Edges</span>
+          <span class="spec-val">HAND-BURNISHED, OAK-BARK WAX, NO SYNTHETIC SEALANT</span>
+        </div>
+      </div>
+
+      <span class="spec-caption">FIG. 02 — FACTORY SPECIFICATION, EDITION NO. 1</span>
+    </section>
+
     <!-- SECTION: THE UNBOXING EXPERIENCE -->
     <section class="unboxing-section" id="unboxing">
       <div class="details-header">
@@ -1751,6 +2686,71 @@
       </div>
     </section>
 
+    <!-- SECTION: THE ATELIER / PROVENANCE -->
+    <section class="provenance-section" id="atelier">
+      <div class="editorial-grid">
+        <div>
+          <span class="eyebrow gsap-reveal-eyebrow">06 / THE ATELIER</span>
+          <h2 class="details-title gsap-reveal-title">One workshop. Two hands. No shortcuts.</h2>
+          <p class="material-body gsap-reveal-text">
+            Meridian began in a single room above a Marais saddlery, with one master, one apprentice,
+            and a refusal to touch a sewing machine. Every wallet is cut, skived, stitched, and burnished
+            at the same bench where the first prototype was made — because an object that claims to
+            outlive its owner should be born in a place that can be visited.
+          </p>
+          <span class="founder-signature gsap-reveal-text">— Édouard Meridian</span>
+          <span class="founder-title gsap-reveal-text">FOUNDER & MASTER SADDLER, PARIS</span>
+        </div>
+
+        <div class="provenance-card gsap-reveal-stats">
+          <div class="prov-row">
+            <span class="prov-key">Founded</span>
+            <span class="prov-val">2026 — PARIS, LE MARAIS</span>
+          </div>
+          <div class="prov-row">
+            <span class="prov-key">Tannery</span>
+            <span class="prov-val">TANNERIES ROUX, ALSACE — EST. 1883, OAK-BARK PITS</span>
+          </div>
+          <div class="prov-row">
+            <span class="prov-key">Hide</span>
+            <span class="prov-val">FRENCH CALFSKIN, TOP 1% FULL-GRAIN SELECTION</span>
+          </div>
+          <div class="prov-row">
+            <span class="prov-key">Workshop</span>
+            <span class="prov-val">24 RUE VIEILLE DU TEMPLE, 75004 — VISITS BY APPOINTMENT</span>
+          </div>
+          <div class="prov-row">
+            <span class="prov-key">Method</span>
+            <span class="prov-val">SADDLE STITCH, TWO-NEEDLE, WAXED LINEN</span>
+          </div>
+          <div class="prov-row">
+            <span class="prov-key">Synthetics</span>
+            <span class="prov-val">NONE. ADHESIVES — NONE. COMPROMISE — NONE.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GUARANTEE STRIP -->
+    <section class="guarantee-strip gsap-reveal-stats" aria-label="Lifetime guarantee">
+      <div class="guar-item">
+        <span class="guar-num">I.</span>
+        <h3 class="guar-title">Lifetime Repair</h3>
+        <p class="guar-desc">If it breaks from honest use, we mend it. Edges re-burnished, linings replaced, structure restored — at no cost, for as long as the wallet exists.</p>
+      </div>
+      <div class="guar-item">
+        <span class="guar-num">II.</span>
+        <h3 class="guar-title">Forever Re-Stitching</h3>
+        <p class="guar-desc">Saddle stitch is designed to outlast the thread of a lifetime. When a decade of friction finally wins, the seam is re-sewn by the same hands, on the same bench.</p>
+      </div>
+      <div class="guar-item">
+        <span class="guar-num">III.</span>
+        <h3 class="guar-title">Transferable to Heirs</h3>
+        <p class="guar-desc">The guarantee follows the certificate, not the buyer. Register the unit number and the promise passes to whoever inherits the object.</p>
+      </div>
+      <span class="guarantee-note">THE MERIDIAN PERPETUITY GUARANTEE — ISSUED WITH EVERY NUMBERED UNIT</span>
+    </section>
+
     <!-- SECTION 5: FINAL CTA SECTION -->
     <section class="cta-section" id="acquire">
       <span class="eyebrow gsap-reveal-eyebrow">LIMITED RELEASE — 250 UNITS</span>
@@ -1769,6 +2769,125 @@
       </div>
 
       <span class="edition-tag">INCLUDES HAND-STAMPED CERTIFICATE & ARCHIVAL WOODEN BOX</span>
+    </section>
+
+    <!-- SECTION: FREQUENTLY ASKED -->
+    <section class="faq-section" id="faq">
+      <div class="details-header">
+        <span class="eyebrow gsap-reveal-eyebrow">07 / QUESTIONS</span>
+        <h2 class="details-title gsap-reveal-title">Before you acquire.</h2>
+      </div>
+
+      <div class="faq-list gsap-reveal-stats">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>How does the unit reservation work?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Each of the 250 units carries a permanent number and certificate. Choose an available number, add your monogram, and our concierge contacts you within 24 hours to arrange payment and hot-stamping. Your number is held for 72 hours during confirmation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>How is the wallet shipped?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Worldwide, complimentary, and insured at full value. The wallet travels inside its raw linen dust bag, sealed inside the archival cedar box. Express delivery runs 2–4 business days from Paris; every shipment requires a signature.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>What if it is not right for me?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Unworn units return within 30 days for a full refund — monogrammed pieces included, since your number simply returns to the pool. Return shipping is prepaid; the atelier covers duties on refunds within the EU and UK.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>How do I care for the patina?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Nothing at all, at first — handling is the whole point. After the first year, a thin coat of cedar-nut balm twice a year keeps the grain supple; store it in its linen bag inside the cedar box when resting. Avoid radiators and rain-soaked pockets, and let it dry naturally if soaked.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>Will six cards really fit?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Six cards plus folded notes, with the cavity precision-cut to hold them without stretching. The calfskin relaxes about 10% in the first month and then holds that shape for decades — the technical card above lists exact dimensions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>How long does monogramming take?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Your initials are hot-stamped by hand in 24k gold, sterling silver, or blind deboss before shipping — add three days to delivery. Monograms are struck once and cannot be changed, so we confirm spelling with you personally.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: THE ARCHIVE / EDITION 02 WAITLIST -->
+    <section class="archive-section" id="archive">
+      <div class="details-header">
+        <span class="eyebrow gsap-reveal-eyebrow">08 / THE ARCHIVE</span>
+        <h2 class="details-title gsap-reveal-title">Editions, recorded.</h2>
+      </div>
+
+      <div class="archive-grid">
+        <div class="archive-list gsap-reveal-stats">
+          <div class="archive-row past">
+            <span>EDITION 00</span>
+            <span class="arch-name">Atelier Prototype</span>
+            <span>12 UNITS — 2025 — SOLD OUT</span>
+          </div>
+          <div class="archive-row">
+            <span>EDITION 01</span>
+            <span class="arch-name">The Meridian No. 1</span>
+            <span class="arch-open">250 UNITS — AVAILABLE</span>
+          </div>
+        </div>
+
+        <div class="waitlist-card gsap-reveal-stats">
+          <span class="eyebrow">EDITION 02 — IN TANNAGE</span>
+          <p>
+            The next hide entered the oak-bark pits this spring. Nine months of tannage,
+            then 250 more numbered units. Reserve your place on the list — members are
+            offered units in order of registration.
+          </p>
+          <form id="waitlist-form" novalidate>
+            <input type="email" id="waitlist-email" placeholder="your@email.com" aria-label="Email address for Edition 02 waitlist" autocomplete="email">
+            <button type="submit" class="magnetic-target">NOTIFY ME</button>
+          </form>
+          <span class="waitlist-status" id="waitlist-status" aria-live="polite"></span>
+        </div>
+      </div>
     </section>
 
     <!-- ATELIERS WORLD CLOCKS FOOTER BAR -->
@@ -1799,6 +2918,20 @@
         <p class="footer-copy">© 2026 MERIDIAN ATELIER S.A. ALL RIGHTS RESERVED.</p>
       </div>
 
+      <div class="footer-maison">
+        <span class="footer-col-title">MAISON</span>
+        <button class="footer-link" data-policy="shipping">SHIPPING &amp; DELIVERY</button>
+        <button class="footer-link" data-policy="returns">RETURNS &amp; GUARANTEE</button>
+        <button class="footer-link" data-policy="privacy">PRIVACY</button>
+      </div>
+
+      <div class="footer-contact">
+        <span class="footer-col-title">CONCIERGE</span>
+        <a class="footer-link" href="mailto:concierge@meridian-atelier.com">CONCIERGE@MERIDIAN-ATELIER.COM</a>
+        <span class="footer-note">PRIVATE APPOINTMENTS — PARIS &amp; TOKYO</span>
+        <span class="footer-note">REPLIES WITHIN 24 HOURS</span>
+      </div>
+
       <div class="footer-locations">
         <span>PARIS</span>
         <span>TOKYO</span>
@@ -1809,11 +2942,11 @@
   </main>
 
   <!-- Checkout / Monogram Acquisition Drawer -->
-  <div class="drawer-backdrop" id="drawer-backdrop">
-    <div class="acquisition-drawer">
+  <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true">
+    <div class="acquisition-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
       <div class="drawer-header">
-        <h3 class="drawer-title">RESERVE EDITION NO. 1</h3>
-        <button class="drawer-close-btn" id="drawer-close">&times;</button>
+        <h3 class="drawer-title" id="drawer-title">RESERVE EDITION NO. 1</h3>
+        <button class="drawer-close-btn" id="drawer-close" aria-label="Close reservation drawer">&times;</button>
       </div>
 
       <div class="drawer-body">
@@ -1822,11 +2955,12 @@
           <span class="input-label">SELECT LIMITED EDITION UNIT NUMBER (001-250):</span>
           <div class="unit-pills">
             <button class="unit-pill active magnetic-target" data-unit="042">#042 — Available</button>
-            <button class="unit-pill magnetic-target" data-unit="007">#007 — Available</button>
+            <button class="unit-pill magnetic-target" data-unit="007" disabled>#007 — Reserved</button>
             <button class="unit-pill magnetic-target" data-unit="088">#088 — Available</button>
-            <button class="unit-pill magnetic-target" data-unit="100">#100 — Available</button>
+            <button class="unit-pill magnetic-target" data-unit="100" disabled>#100 — Reserved</button>
             <button class="unit-pill magnetic-target" data-unit="250">#250 — Final Unit</button>
           </div>
+          <span class="unit-remaining">233 OF 250 UNITS REMAIN WORLDWIDE</span>
         </div>
 
         <div class="monogram-input-group">
@@ -1846,6 +2980,14 @@
         <div class="monogram-preview-card">
           <span class="input-label" style="margin-bottom: 0.8rem; display: block;">HOT-STAMP EMBOSS PREVIEW:</span>
           <div class="preview-foil-text gold" id="monogram-preview">A.V</div>
+        </div>
+
+        <!-- Live Certificate Preview -->
+        <div class="cert-preview" aria-label="Certificate preview">
+          <span class="cert-heading">CERTIFICATE OF PROVENANCE</span>
+          <span class="cert-number" id="cert-number">MER-2026-042</span>
+          <span class="cert-monogram preview-foil-text gold" id="cert-monogram">A.V</span>
+          <span class="cert-foot">É. MERIDIAN — PARIS, 2026 · EDITION 01 OF 250</span>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
@@ -1869,6 +3011,26 @@
       </div>
 
       <button class="drawer-confirm-btn magnetic-target" id="drawer-confirm">PROCEED TO ATELIER CHECKOUT</button>
+
+      <!-- Reservation Success Panel -->
+      <div class="drawer-success" id="drawer-success" role="status" aria-live="polite">
+        <div class="success-mark" aria-hidden="true">&#10003;</div>
+        <h4 id="drawer-success-unit">UNIT #042 — RESERVED</h4>
+        <p id="drawer-success-cert">CERTIFICATE #MER-2026-042 REGISTERED TO YOUR NAME.</p>
+        <p class="success-note">Our concierge will write within 24 hours to arrange payment and hot-stamp your monogram.</p>
+        <button class="drawer-confirm-btn magnetic-target" id="drawer-success-close">RETURN TO THE ATELIER</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Policy Modal -->
+  <div class="policy-backdrop" id="policy-backdrop" aria-hidden="true">
+    <div class="policy-panel" role="dialog" aria-modal="true" aria-labelledby="policy-title">
+      <div class="drawer-header">
+        <h3 class="drawer-title" id="policy-title">POLICY</h3>
+        <button class="drawer-close-btn" id="policy-close" aria-label="Close policy panel">&times;</button>
+      </div>
+      <div class="policy-body" id="policy-body"></div>
     </div>
   </div>
 
@@ -1878,13 +3040,23 @@
   <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
 
   <script>
-    // Register GSAP Plugins
-    gsap.registerPlugin(ScrollTrigger);
+    // Register GSAP Plugins — guarded so a failed CDN cannot trap the page behind the preloader
+    const gsapLoaded = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+    if (gsapLoaded) gsap.registerPlugin(ScrollTrigger);
+
+    // Honour the OS-level motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // 1. Studio Preloader Sequence
     const loaderBar = document.getElementById('loader-bar');
     const loaderCounter = document.getElementById('loader-counter');
     const preloader = document.getElementById('preloader');
+
+    // Hard fallback: never leave the site hidden if a CDN or the reveal tween fails
+    const preloaderFailSafe = setTimeout(forceRevealPage, 6000);
+
+    // Skip the loading theater entirely for reduced-motion users
+    if (prefersReducedMotion) setTimeout(revealPage, 350);
 
     let count = 0;
     const interval = setInterval(() => {
@@ -1899,6 +3071,11 @@
     }, 25);
 
     function revealPage() {
+      clearTimeout(preloaderFailSafe);
+      if (!gsapLoaded) {
+        forceRevealPage();
+        return;
+      }
       gsap.to(preloader, {
         y: '-100%',
         duration: 1.2,
@@ -1910,21 +3087,31 @@
       });
     }
 
-    // 2. Initialize Lenis Inertia Smooth Scroll
-    const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-    });
+    function forceRevealPage() {
+      clearTimeout(preloaderFailSafe);
+      clearInterval(interval);
+      preloader.style.display = 'none';
+      document.body.classList.add('no-motion');
+    }
 
-    lenis.on('scroll', ScrollTrigger.update);
+    // 2. Initialize Lenis Inertia Smooth Scroll (falls back to native scrolling)
+    let lenis = null;
+    if (gsapLoaded && typeof Lenis !== 'undefined' && !prefersReducedMotion) {
+      lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 0.9,
+      });
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+      lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.lagSmoothing(0);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+
+      gsap.ticker.lagSmoothing(0);
+    }
 
     // 3. Custom Magnetic Cursor Logic
     const cursor = document.getElementById('cursor');
@@ -1937,6 +3124,8 @@
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+
+      if (!gsapLoaded) return;
 
       gsap.to(cursor, {
         x: mouseX,
@@ -1957,6 +3146,7 @@
     // Magnetic button effects & Audio Click Trigger
     magneticTargets.forEach((target) => {
       target.addEventListener('mousemove', (e) => {
+        if (!gsapLoaded) return;
         const rect = target.getBoundingClientRect();
         const relX = e.clientX - rect.left - rect.width / 2;
         const relY = e.clientY - rect.top - rect.height / 2;
@@ -1972,6 +3162,7 @@
       });
 
       target.addEventListener('mouseleave', () => {
+        if (!gsapLoaded) return;
         gsap.to(target, {
           x: 0,
           y: 0,
@@ -2009,6 +3200,7 @@
         if (audioCtx.state === 'suspended') audioCtx.resume();
         playAmbientDrone();
       } else {
+        stopAmbientDrone();
         if (audioCtx) audioCtx.suspend();
       }
     });
@@ -2051,7 +3243,23 @@
       osc.stop(audioCtx.currentTime + 0.6);
     }
 
+    let droneNodes = null;
+
+    function stopAmbientDrone() {
+      if (!droneNodes) return;
+      try {
+        droneNodes.osc1.stop();
+        droneNodes.osc2.stop();
+        droneNodes.gain.disconnect();
+      } catch (err) {
+        // Nodes may already be stopped or disconnected
+      }
+      droneNodes = null;
+    }
+
     function playAmbientDrone() {
+      stopAmbientDrone();
+
       const osc1 = audioCtx.createOscillator();
       const osc2 = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
@@ -2070,19 +3278,34 @@
 
       osc1.start();
       osc2.start();
+
+      droneNodes = { osc1, osc2, gain };
     }
 
-    // 5. Hero Light Canvas Particles
+    // 5. Hero Light Canvas — gold dust with twinkle and cursor repulsion
     const canvas = document.getElementById('hero-light-canvas');
     const ctx = canvas.getContext('2d');
     let width, height;
     let particles = [];
+    let heroInView = true;
+    let dustMouseX = -9999;
+    let dustMouseY = -9999;
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        heroInView = entries[0].isIntersecting;
+      }).observe(document.querySelector('.hero-section'));
+    }
 
     function resizeCanvas() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', (e) => {
+      dustMouseX = e.clientX;
+      dustMouseY = e.clientY;
+    });
     resizeCanvas();
 
     for (let i = 0; i < 45; i++) {
@@ -2092,14 +3315,31 @@
         radius: Math.random() * 1.5 + 0.5,
         alpha: Math.random() * 0.5 + 0.2,
         vy: -Math.random() * 0.3 - 0.1,
-        vx: (Math.random() - 0.5) * 0.2
+        vx: (Math.random() - 0.5) * 0.2,
+        phase: Math.random() * Math.PI * 2,
+        twinkle: Math.random() * 0.002 + 0.0008
       });
     }
 
     function drawCanvas() {
+      requestAnimationFrame(drawCanvas);
+      if (!heroInView) return;
+
       ctx.clearRect(0, 0, width, height);
+      const now = performance.now();
 
       particles.forEach(p => {
+        // Gentle repulsion from the cursor
+        const dx = p.x - dustMouseX;
+        const dy = p.y - dustMouseY;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < 130 && dist > 0.01) {
+          const push = (1 - dist / 130) * 0.7;
+          p.x += (dx / dist) * push;
+          p.y += (dy / dist) * push;
+        }
+
         p.y += p.vy;
         p.x += p.vx;
 
@@ -2107,38 +3347,73 @@
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
 
+        const twinkle = 0.6 + 0.4 * Math.sin(now * p.twinkle + p.phase);
+
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(225, 185, 80, ${p.alpha})`;
+        ctx.fillStyle = `rgba(225, 185, 80, ${(p.alpha * twinkle).toFixed(3)})`;
         ctx.shadowBlur = 10;
         ctx.shadowColor = '#c59b27';
         ctx.fill();
       });
-
-      requestAnimationFrame(drawCanvas);
     }
     drawCanvas();
 
     // 6. Hero Entrance Animations & Parallax
     function initHeroAnimations() {
+      if (prefersReducedMotion) {
+        document.body.classList.add('no-motion');
+        return;
+      }
+
       const heroTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
       heroTl
-        .to('.line-mask-inner', {
-          y: '0%',
-          duration: 1.5,
-          stagger: 0.15
-        })
+        // Slow cinematic settle of the backdrop plate
+        .fromTo('.hero-bg img',
+          { scale: 1.18 },
+          { scale: 1.05, duration: 2.8, ease: 'power3.out' }, 0)
+        // Title lines wipe up through a soft-focus blur
+        .fromTo('.line-mask-inner',
+          { y: '110%', filter: 'blur(10px)' },
+          { y: '0%', filter: 'blur(0px)', duration: 1.5, stagger: 0.15 }, 0.15)
         .to('.gsap-reveal-fade', {
           opacity: 1,
           y: 0,
           duration: 1.2,
-          stagger: 0.2
-        }, '-=1.0');
+          stagger: 0.14
+        }, '-=0.9');
+    }
+
+    // Cinematic scroll exits: content lifts away while the backdrop pushes in
+    if (gsapLoaded && !prefersReducedMotion) {
+      gsap.to('.hero-content', {
+        y: -90,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom 40%',
+          scrub: true
+        }
+      });
+
+      gsap.to('.hero-bg', {
+        scale: 1.14,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
     }
 
     const heroBgImg = document.getElementById('hero-img');
     window.addEventListener('mousemove', (e) => {
+      if (!gsapLoaded) return;
       const xPercent = (e.clientX / window.innerWidth - 0.5) * 30;
       const yPercent = (e.clientY / window.innerHeight - 0.5) * 30;
 
@@ -2171,6 +3446,8 @@
         swatchTargets.forEach(img => {
           img.style.filter = filterVal;
         });
+
+        saveSelections();
       });
     });
 
@@ -2180,6 +3457,7 @@
     const patinaYearBadge = document.getElementById('patina-year-badge');
     const patinaTitle = document.getElementById('patina-state-title');
     const patinaBody = document.getElementById('patina-state-body');
+    const patinaQuote = document.getElementById('patina-state-quote');
     const patinaYearSteps = document.querySelectorAll('.patina-year-step');
 
     const patinaData = [
@@ -2187,24 +3465,28 @@
         year: 'DAY 1',
         title: 'Fresh Oak-Bark Tannage',
         desc: 'Unblemished natural full-grain surface. Smooth matte texture with soft honey highlights ready to absorb oils from daily handling.',
+        quote: '“It will never look this new again — that is the point.”',
         filter: 'brightness(0.9) contrast(1.05) sepia(0)'
       },
       {
         year: 'YEAR 1',
         title: 'Silky Amber Warmth',
         desc: 'Edges begin to soften, developing a rich caramel tone across high-contact zones. Grain pores tighten under natural friction.',
+        quote: '“It has learned the shape of your pocket.”',
         filter: 'brightness(0.82) contrast(1.15) sepia(0.25) saturate(1.1)'
       },
       {
         year: 'YEAR 5',
         title: 'Burnished Deep Cognac',
         desc: 'Deep luster with glassy burnished edges. The leather has molded perfectly to your daily card setup.',
+        quote: '“Strangers ask where you found it. You tell them: years ago.”',
         filter: 'brightness(0.75) contrast(1.25) sepia(0.5) saturate(1.25)'
       },
       {
         year: 'YEAR 10',
         title: 'Heirloom Mahogany Antique',
         desc: 'Fully developed vintage patina with unique character marks. Indestructible saddle stitching holding firm after a decade of use.',
+        quote: '“Three jobs, two continents, one wallet.” — M.R., OWNER SINCE DAY ONE',
         filter: 'brightness(0.65) contrast(1.35) sepia(0.7) saturate(1.4)'
       }
     ];
@@ -2215,6 +3497,7 @@
       patinaYearBadge.textContent = data.year;
       patinaTitle.textContent = data.title;
       patinaBody.textContent = data.desc;
+      patinaQuote.textContent = data.quote;
 
       patinaYearSteps.forEach((s, idx) => {
         s.classList.toggle('active', idx === parseInt(step));
@@ -2233,8 +3516,11 @@
       });
     });
 
-    // 9. Material Section Scroll Reveals
-    gsap.fromTo('#material-img', 
+    // Render the initial patina state (quote included)
+    updatePatina(0);
+
+    // 9. Material Section Scroll Reveals (skipped when GSAP failed to load)
+    if (gsapLoaded) gsap.fromTo('#material-img',
       { y: '-10%', scale: 1.2 },
       {
         y: '10%',
@@ -2256,7 +3542,7 @@
       { selector: '.gsap-reveal-stats', y: 40 }
     ];
 
-    reveals.forEach(({ selector, y }) => {
+    if (gsapLoaded) reveals.forEach(({ selector, y }) => {
       gsap.fromTo(selector, 
         { opacity: 0, y },
         {
@@ -2282,7 +3568,7 @@
 
     const totalSteps = stageImages.length;
 
-    ScrollTrigger.create({
+    if (gsapLoaded) ScrollTrigger.create({
       trigger: craftPinWrapper,
       start: 'top top',
       end: () => `+=${window.innerHeight * 3}`,
@@ -2328,35 +3614,85 @@
     const drawerItemTitle = document.getElementById('drawer-item-title');
     const unboxingUnitCert = document.getElementById('unboxing-unit-cert');
     const drawerConfirm = document.getElementById('drawer-confirm');
+    const heroCtaButton = document.getElementById('hero-cta');
 
     let selectedUnit = '042';
 
     unitPills.forEach(pill => {
       pill.addEventListener('click', () => {
+        if (pill.disabled) return;
         unitPills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
         selectedUnit = pill.dataset.unit;
 
         drawerItemTitle.textContent = `MERIDIAN NO. 1 (UNIT #${selectedUnit})`;
         unboxingUnitCert.textContent = `CERT # MER-2026-${selectedUnit}`;
+        document.getElementById('cert-number').textContent = `MER-2026-${selectedUnit}`;
+        saveSelections();
       });
     });
+
+    let lastFocusedElement = null;
+    const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
 
     function openDrawer(e) {
       if (e) e.preventDefault();
       initAudio();
       playChime();
+      lastFocusedElement = document.activeElement;
       drawerBackdrop.classList.add('active');
-      lenis.stop();
+      drawerBackdrop.setAttribute('aria-hidden', 'false');
+      if (lenis) lenis.stop();
+      drawerClose.focus();
     }
 
     function closeDrawer() {
       drawerBackdrop.classList.remove('active');
-      lenis.start();
+      if (lenis) lenis.start();
+      if (lastFocusedElement) lastFocusedElement.focus();
+      drawerBackdrop.setAttribute('aria-hidden', 'true');
+
+      // Reset the success state after the closing transition
+      const successPanel = document.getElementById('drawer-success');
+      if (successPanel.classList.contains('active')) {
+        setTimeout(() => {
+          successPanel.classList.remove('active');
+          document.querySelector('.drawer-body').classList.remove('hidden');
+          drawerConfirm.style.display = '';
+          drawerConfirm.disabled = false;
+          drawerConfirm.textContent = 'PROCEED TO ATELIER CHECKOUT';
+        }, 450);
+      }
     }
+
+    // Escape closes the drawer; Tab is trapped inside it while open
+    document.addEventListener('keydown', (e) => {
+      if (!drawerBackdrop.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        closeDrawer();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const focusables = Array.from(drawerBackdrop.querySelectorAll(FOCUSABLE_SELECTOR));
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
 
     ctaButton.addEventListener('click', openDrawer);
     headerReserveBtn.addEventListener('click', openDrawer);
+    heroCtaButton.addEventListener('click', openDrawer);
     drawerClose.addEventListener('click', closeDrawer);
 
     drawerBackdrop.addEventListener('click', (e) => {
@@ -2366,6 +3702,8 @@
     monogramInput.addEventListener('input', (e) => {
       const val = e.target.value.toUpperCase();
       monogramPreview.textContent = val.split('').join('.') || '—';
+      document.getElementById('cert-monogram').textContent = val.split('').join('.') || '—';
+      saveSelections();
     });
 
     foilOpts.forEach(btn => {
@@ -2375,22 +3713,216 @@
         const foil = btn.dataset.foil;
 
         monogramPreview.className = `preview-foil-text ${foil}`;
+        document.getElementById('cert-monogram').className = `cert-monogram preview-foil-text ${foil}`;
+        saveSelections();
       });
     });
 
     drawerConfirm.addEventListener('click', () => {
+      if (drawerConfirm.disabled) return;
+      drawerConfirm.disabled = true;
       drawerConfirm.textContent = `RESERVING ATELIER UNIT #${selectedUnit}...`;
-      drawerConfirm.style.backgroundColor = '#d8b843';
 
       setTimeout(() => {
-        alert(`Unit #${selectedUnit} successfully reserved. Certificate #MER-2026-${selectedUnit} registered to your name.`);
-        closeDrawer();
-        drawerConfirm.textContent = 'PROCEED TO ATELIER CHECKOUT';
-        drawerConfirm.style.backgroundColor = 'var(--accent-gold)';
+        document.querySelector('.drawer-body').classList.add('hidden');
+        drawerConfirm.style.display = 'none';
+
+        document.getElementById('drawer-success-unit').textContent = `UNIT #${selectedUnit} — RESERVED`;
+        document.getElementById('drawer-success-cert').textContent = `CERTIFICATE #MER-2026-${selectedUnit} REGISTERED TO YOUR NAME.`;
+        document.getElementById('drawer-success').classList.add('active');
+        saveSelections();
+
+        // To take real deposits, open a Stripe Payment Link here instead of the mock panel:
+        // window.location.href = STRIPE_PAYMENT_URL;
       }, 1200);
     });
 
-    // 12. Ateliers Live World Clocks
+    document.getElementById('drawer-success-close').addEventListener('click', () => closeDrawer());
+
+    // 12. Mobile Navigation Overlay
+    const mobileNav = document.getElementById('mobile-nav');
+    const menuBtn = document.getElementById('menu-btn');
+
+    function toggleMobileNav(force) {
+      const open = typeof force === 'boolean' ? force : !mobileNav.classList.contains('active');
+      mobileNav.classList.toggle('active', open);
+      menuBtn.classList.toggle('active', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      mobileNav.setAttribute('aria-hidden', String(!open));
+
+      if (open) {
+        if (lenis) lenis.stop();
+      } else if (!drawerBackdrop.classList.contains('active')) {
+        if (lenis) lenis.start();
+      }
+    }
+
+    menuBtn.addEventListener('click', () => toggleMobileNav());
+
+    mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (lenis && href && href.startsWith('#')) {
+          e.preventDefault();
+          toggleMobileNav(false);
+          lenis.scrollTo(href, { duration: 1.4 });
+        } else {
+          toggleMobileNav(false);
+        }
+      });
+    });
+
+    // 13. FAQ Accordion (one open at a time)
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const btn = item.querySelector('.faq-q');
+      btn.addEventListener('click', () => {
+        const wasOpen = item.classList.contains('active');
+        document.querySelectorAll('.faq-item.active').forEach(other => {
+          other.classList.remove('active');
+          other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('active');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // 14. Policy Modal
+    const POLICIES = {
+      shipping: {
+        title: 'SHIPPING & DELIVERY',
+        body: `
+          <h4>Rates &amp; Coverage</h4>
+          <p>Every unit ships worldwide, complimentary, and fully insured at its declared value. Express delivery runs 2–4 business days from the Paris atelier; all parcels require a signature on delivery.</p>
+          <h4>Packaging</h4>
+          <p>The wallet travels inside its raw linen dust bag, sealed within the archival cedar box, packed in recycled paper cushioning. No plastic is used anywhere in the shipment.</p>
+          <h4>Duties</h4>
+          <p>Import duties and taxes are prepaid by the atelier for the EU, UK, US, Canada, and Japan. For other destinations, any local charges are the recipient's responsibility and are declared honestly — we do not under-invoice.</p>`
+      },
+      returns: {
+        title: 'RETURNS & GUARANTEE',
+        body: `
+          <h4>30-Day Returns</h4>
+          <p>Unworn units may be returned within 30 days of delivery for a full refund — monogrammed pieces included, as your number simply returns to the pool. Return shipping is prepaid; contact the concierge to arrange a collection.</p>
+          <h4>The Perpetuity Guarantee</h4>
+          <p>Lifetime repair, forever re-stitching, and hardware replacement on every numbered unit — transferable to heirs with the certificate. Damage from honest use is repaired at no cost; catastrophic loss (fire, theft) is not covered, though we will rebuild from your certificate at cost.</p>
+          <h4>Wear Expectations</h4>
+          <p>Full-grain leather patinas rather than wearing out. Darkening, softening, and character marks are the material behaving correctly and are not defects.</p>`
+      },
+      privacy: {
+        title: 'PRIVACY',
+        body: `
+          <h4>What We Keep</h4>
+          <p>Your email, your monogram initials, your reserved unit number, and your shipping address when an order is placed. Nothing else. No tracking pixels, no advertising profiles, no resale of data — ever.</p>
+          <h4>Why</h4>
+          <p>To fulfil your order, register your certificate, and — if you joined the waitlist — to write when Edition 02 leaves the tannery.</p>
+          <h4>Removal</h4>
+          <p>Ask the concierge and every record tied to your email is deleted within 30 days, certificate ownership excepted (unit provenance must remain intact for future heirs).</p>`
+      }
+    };
+
+    const policyBackdrop = document.getElementById('policy-backdrop');
+
+    function openPolicy(key) {
+      const policy = POLICIES[key];
+      if (!policy) return;
+      document.getElementById('policy-title').textContent = policy.title;
+      document.getElementById('policy-body').innerHTML = policy.body;
+      policyBackdrop.classList.add('active');
+      policyBackdrop.setAttribute('aria-hidden', 'false');
+      if (lenis) lenis.stop();
+      document.getElementById('policy-close').focus();
+    }
+
+    function closePolicy() {
+      policyBackdrop.classList.remove('active');
+      policyBackdrop.setAttribute('aria-hidden', 'true');
+      if (!drawerBackdrop.classList.contains('active') && !mobileNav.classList.contains('active')) {
+        if (lenis) lenis.start();
+      }
+    }
+
+    document.querySelectorAll('.footer-link[data-policy]').forEach(btn => {
+      btn.addEventListener('click', () => openPolicy(btn.dataset.policy));
+    });
+
+    document.getElementById('policy-close').addEventListener('click', closePolicy);
+    policyBackdrop.addEventListener('click', (e) => {
+      if (e.target === policyBackdrop) closePolicy();
+    });
+
+    // 15. Edition 02 Waitlist
+    const waitlistForm = document.getElementById('waitlist-form');
+    const waitlistEmail = document.getElementById('waitlist-email');
+    const waitlistStatus = document.getElementById('waitlist-status');
+
+    waitlistForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = waitlistEmail.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        waitlistStatus.textContent = 'PLEASE ENTER A VALID EMAIL ADDRESS.';
+        return;
+      }
+
+      // Wire a real endpoint here (Formspree, Buttondown, etc.) when deploying
+      waitlistEmail.disabled = true;
+      waitlistForm.querySelector('button').disabled = true;
+      waitlistStatus.textContent = 'REGISTERED — WE WILL WRITE WHEN EDITION 02 LEAVES THE TANNERY.';
+    });
+
+    // 16. Escape handling for the mobile nav and policy modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (mobileNav.classList.contains('active')) toggleMobileNav(false);
+      if (policyBackdrop.classList.contains('active')) closePolicy();
+    });
+
+    // 17. Selection Persistence (finish, unit, monogram, foil)
+    function saveSelections() {
+      try {
+        const activeFinish = document.querySelector('.swatch-btn.active');
+        const activeFoil = document.querySelector('.foil-opt.active');
+        localStorage.setItem('meridian-selections', JSON.stringify({
+          finish: activeFinish ? activeFinish.dataset.finish : null,
+          unit: selectedUnit,
+          monogram: monogramInput.value,
+          foil: activeFoil ? activeFoil.dataset.foil : null
+        }));
+      } catch (err) {
+        // Storage unavailable (private mode, etc.) — selection simply won't persist
+      }
+    }
+
+    function restoreSelections() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('meridian-selections') || 'null');
+        if (!saved) return;
+
+        if (saved.monogram) {
+          monogramInput.value = saved.monogram.toUpperCase().slice(0, 3);
+          monogramInput.dispatchEvent(new Event('input'));
+        }
+        if (saved.foil) {
+          const foilBtn = document.querySelector(`.foil-opt[data-foil="${saved.foil}"]`);
+          if (foilBtn) foilBtn.click();
+        }
+        if (saved.unit) {
+          const pill = document.querySelector(`.unit-pill[data-unit="${saved.unit}"]`);
+          if (pill && !pill.disabled) pill.click();
+        }
+        if (saved.finish) {
+          const swatch = document.querySelector(`.swatch-btn[data-finish="${saved.finish}"]`);
+          if (swatch) swatch.click();
+        }
+      } catch (err) {
+        // Corrupted or unavailable storage — ignore
+      }
+    }
+
+    restoreSelections();
+
+    // 18. Ateliers Live World Clocks
     function updateWorldClocks() {
       const now = new Date();
 
@@ -2400,13 +3932,14 @@
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
-          hour12: false
+          hour12: false,
+          timeZoneName: 'shortOffset'
         }).format(now);
       };
 
-      document.getElementById('time-paris').textContent = `${formatTime('Europe/Paris')} CEST`;
-      document.getElementById('time-tokyo').textContent = `${formatTime('Asia/Tokyo')} JST`;
-      document.getElementById('time-ny').textContent = `${formatTime('America/New_York')} EDT`;
+      document.getElementById('time-paris').textContent = formatTime('Europe/Paris');
+      document.getElementById('time-tokyo').textContent = formatTime('Asia/Tokyo');
+      document.getElementById('time-ny').textContent = formatTime('America/New_York');
     }
 
     setInterval(updateWorldClocks, 1000);
