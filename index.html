@@ -34,9 +34,9 @@
   </script>
 
   <!-- Premium Editorial Google Fonts: Instrument Serif, Bodoni Moda & Plus Jakarta Sans -->
-  <!-- Self-hosted fonts (vendored from Google Fonts, latin subset) -->
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/Instrument-Serif-normal.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/Instrument-Serif-italic.woff2">
+  <!-- Self-hosted fonts (vendored, latin subset) -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/Italiana-normal.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/Bodoni-Moda-italic.woff2">
 
   <!-- LCP image: start fetching before CSS/JS parse -->
   <link rel="preload" as="image" href="assets/hero.webp" fetchpriority="high">
@@ -86,29 +86,20 @@
     }
 
     @font-face {
-      font-family: 'Instrument Serif';
+      font-family: 'Italiana';
       font-style: normal;
       font-weight: 400;
       font-display: swap;
-      src: url(assets/fonts/Instrument-Serif-normal.woff2) format('woff2');
+      src: url(assets/fonts/Italiana-normal.woff2) format('woff2');
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
 
     @font-face {
-      font-family: 'Instrument Serif';
-      font-style: italic;
-      font-weight: 400;
-      font-display: swap;
-      src: url(assets/fonts/Instrument-Serif-italic.woff2) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-
-    @font-face {
-      font-family: 'Plus Jakarta Sans';
+      font-family: 'Jost';
       font-style: normal;
       font-weight: 200 700;
       font-display: swap;
-      src: url(assets/fonts/Plus-Jakarta-Sans-normal.woff2) format('woff2');
+      src: url(assets/fonts/Jost-normal.woff2) format('woff2');
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
 
@@ -124,9 +115,9 @@
       --border-subtle: rgba(246, 243, 235, 0.08);
       --border-gold: rgba(197, 155, 39, 0.35);
       
-      --font-serif-hero: 'Instrument Serif', 'Bodoni Moda', Georgia, serif;
-      --font-serif-display: 'Bodoni Moda', 'Instrument Serif', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-serif-hero: 'Italiana', 'Bodoni Moda', Georgia, serif;
+      --font-serif-display: 'Bodoni Moda', 'Italiana', Georgia, serif;
+      --font-sans: 'Jost', -apple-system, sans-serif;
     }
 
     /* Keyboard users can jump past the nav and preloader chrome */
@@ -163,7 +154,7 @@
       background-color: var(--bg-dark);
       color: var(--text-cream);
       font-family: var(--font-sans);
-      font-weight: 300;
+      font-weight: 400;
       overflow-x: hidden;
       width: 100%;
       height: 100%;
@@ -212,7 +203,7 @@
     }
 
     .preloader-counter {
-      font-family: var(--font-serif-hero);
+      font-family: var(--font-serif-display);
       font-size: 3rem;
       color: var(--accent-gold);
       font-weight: 400;
@@ -315,6 +306,12 @@
       display: inline-block;
       margin-bottom: 1.5rem;
       font-weight: 500;
+    }
+
+    /* Gold-italic accent voice — real Bodoni italics wherever the serif runs oblique */
+    .gold-italic {
+      font-family: var(--font-serif-display);
+      font-style: italic;
     }
 
     .line-mask {
@@ -616,8 +613,8 @@
       font-family: var(--font-serif-hero);
       font-size: clamp(4.2rem, 9.5vw, 11rem);
       font-weight: 400;
-      line-height: 0.85;
-      letter-spacing: -0.02em;
+      line-height: 0.9;
+      letter-spacing: 0.01em;
       color: var(--text-cream);
       text-transform: uppercase;
       margin-bottom: 2.5rem;
@@ -892,7 +889,7 @@
     }
 
     .stat-val {
-      font-family: var(--font-serif-hero);
+      font-family: var(--font-serif-display);
       font-size: 2.5rem;
       color: var(--text-cream);
       font-style: italic;
@@ -1119,7 +1116,7 @@
       position: absolute;
       top: 2rem;
       right: 2rem;
-      font-family: var(--font-serif-hero);
+      font-family: var(--font-serif-display);
       font-size: 1.8rem;
       font-style: italic;
       color: var(--accent-gold);
@@ -1269,7 +1266,7 @@
     }
 
     .craft-step-counter {
-      font-family: var(--font-serif-hero);
+      font-family: var(--font-serif-display);
       font-size: 2rem;
       font-style: italic;
       color: var(--accent-gold);
@@ -1867,7 +1864,7 @@
     }
 
     .founder-signature {
-      font-family: var(--font-serif-hero);
+      font-family: var(--font-serif-display);
       font-style: italic;
       font-size: 2rem;
       color: var(--accent-gold);
@@ -2396,7 +2393,7 @@
 
     /* Patina owner quote */
     .patina-state-quote {
-      font-family: var(--font-serif-hero);
+      font-family: var(--font-serif-display);
       font-style: italic;
       font-size: 1.15rem;
       line-height: 1.55;

@@ -14,29 +14,29 @@ colors:
   border-gold: "rgba(197, 155, 39, 0.35)"
 typography:
   display:
-    fontFamily: "Instrument Serif, Bodoni Moda, Georgia, serif"
+    fontFamily: "Italiana, Bodoni Moda, Georgia, serif"
     fontSize: "clamp(4.2rem, 9.5vw, 11rem)"
     fontWeight: 400
-    lineHeight: 0.85
-    letterSpacing: "-0.02em"
+    lineHeight: 0.9
+    letterSpacing: "0.01em"
   headline:
-    fontFamily: "Bodoni Moda, Instrument Serif, Georgia, serif"
+    fontFamily: "Bodoni Moda, Italiana, Georgia, serif"
     fontSize: "clamp(2.5rem, 4.2vw, 4.6rem)"
     fontWeight: 300
     lineHeight: 1.05
     letterSpacing: "-0.01em"
   title:
-    fontFamily: "Bodoni Moda, Instrument Serif, Georgia, serif"
+    fontFamily: "Bodoni Moda, Italiana, Georgia, serif"
     fontSize: "2rem"
     fontWeight: 400
   body:
-    fontFamily: "Plus Jakarta Sans, -apple-system, sans-serif"
+    fontFamily: "Jost, -apple-system, sans-serif"
     fontSize: "1rem"
-    fontWeight: 300
+    fontWeight: 400
     lineHeight: 1.75
     letterSpacing: "0.02em"
   label:
-    fontFamily: "Plus Jakarta Sans, -apple-system, sans-serif"
+    fontFamily: "Jost, -apple-system, sans-serif"
     fontSize: "0.7rem"
     fontWeight: 500
     lineHeight: 1.4
@@ -125,23 +125,23 @@ A candlelit palette: three darknesses for ground, one cream for ink, and two war
 
 ## Typography
 
-**Display Font:** Instrument Serif (Bodoni Moda, Georgia fallback)
-**Headline Font:** Bodoni Moda (Instrument Serif, Georgia fallback)
-**Body/Label Font:** Plus Jakarta Sans (-apple-system fallback)
+**Display Font:** Italiana (Bodoni Moda, Georgia fallback)
+**Headline Font:** Bodoni Moda (Italiana, Georgia fallback)
+**Body/Label Font:** Jost (-apple-system fallback)
 
-**Character:** A didone-meets-editorial pairing — Instrument Serif's sharp, high-contrast caps for the enormous statements; Bodoni Moda for section headlines where a little more width reads as engraved; Plus Jakarta Sans at weight 300/500 doing all the quiet work, always uppercase and letterspaced when small.
+**Character:** A fashion-maison pairing — Italiana's hairline, ultra-high-contrast caps are the couture voice for the enormous statements; Bodoni Moda is the engraved didone for section headlines and owns every italic accent (the gold-italic voice is Bodoni italic — a real italic, never a synthesized slant); Jost, a Futura-spirit geometric, does the quiet work at weight 400/500, uppercase and letterspaced when small. Body copy runs 400 on dark — light faces get one step more weight.
 
 ### Hierarchy
-- **Display** (400, clamp(4.2rem→11rem), lh 0.85, ls −0.02em): hero and CTA statements; second line italic in gold via `.gold-italic`.
+- **Display** (400, clamp(4.2rem→11rem), lh 0.9, ls 0.01em): hero and CTA statements; second line in Bodoni italic gold via `.gold-italic`.
 - **Headline** (300, clamp(2.5rem→4.6rem), lh 1.05): section headlines and pull-quotes.
 - **Title** (400, 2rem): card and drawer headings.
-- **Body** (300, 0.85–1.05rem, lh 1.7–1.8, ls 0.02em): editorial paragraphs, max ~62ch.
+- **Body** (400, 0.85–1.05rem, lh 1.7–1.8, ls 0.02em): editorial paragraphs, max ~62ch.
 - **Label** (500, 0.56–0.75rem, ls 0.25–0.42em, uppercase): eyebrows, input labels, tags, captions — the system's whisper register.
 
 ### Named Rules
 **The Whisper Rule.** The smaller the text, the wider its tracking: labels run 0.25–0.42em; body never exceeds 0.02em. Small text never drops below 0.56rem.
 
-**The Two-Serif Rule.** Instrument Serif speaks, Bodoni Moda engraves, and only one may appear per section headline slot. Never set body copy in a serif.
+**The Two-Serif Rule.** Italiana speaks, Bodoni Moda engraves — and Bodoni owns every italic. Never set body copy in a serif, never synthesize an oblique.
 
 ## Layout
 

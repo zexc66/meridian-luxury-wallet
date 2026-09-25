@@ -13,7 +13,7 @@ test('critical path: load, reveal, hero, drawer', async ({ page }) => {
   await expect(page.locator('#hero-cta')).toBeVisible();
 
   // Fonts actually resolve (self-hosted)
-  await expect.poll(() => page.evaluate(() => document.fonts.check('1rem "Instrument Serif"')), { timeout: 8000 }).toBe(true);
+  await expect.poll(() => page.evaluate(() => document.fonts.check('1rem "Italiana"')), { timeout: 8000 }).toBe(true);
 
   // Reservation drawer opens from the hero CTA and closes via keyboard
   await page.click('#hero-cta');
