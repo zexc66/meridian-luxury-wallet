@@ -188,7 +188,7 @@ Two families, strictly separated. **Ledger forms** — cards, fields, tables, dr
 - **Underline (waitlist):** transparent ground, bottom gold hairline, focus brightens the line. No glow, no ring.
 
 ### Navigation
-- **Style:** fixed, blend-difference, cream serif wordmark + numbered sans links ("01. LEATHER") with letterspaced hover states; ≤900px becomes a full-screen near-black overlay with staggered 2–3.4rem serif links and a morphing two-bar hamburger.
+- **Style:** fixed bar, transparent over the hero; past 80px it becomes a compact frosted plate (Tannery Black at 82% + 14px blur, bottom Ghost Cream hairline). Cream serif wordmark + numbered sans links ("01. LEATHER") — the current chapter's number turns gold with a scaleX gold underline; links hide on scroll-down and return on scroll-up, and a 1px gold progress hairline tracks reading position along the header's base. The CTA is the header's one jewel (ghost-gold border flooding solid gold on hover); the sound toggle is an icon-only circle. No blend modes — the header owns its contrast. ≤1200px tightens gaps; ≤900px replaces links with a staggered full-screen serif overlay behind a morphing two-bar hamburger; ≤600px drops the sound toggle.
 
 ### Certificate Preview
 The signature component: a double-framed plate (outer gold hairline, inset ghost-cream hairline at 6px) with a microscopic letterspaced heading, large Bodoni certificate number, foil-class monogram, and archival foot line. Updates live. It is the ledger-and-jewel idea in one object.

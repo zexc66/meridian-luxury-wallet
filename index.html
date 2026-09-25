@@ -345,7 +345,38 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      mix-blend-mode: difference;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition:
+        padding 0.6s cubic-bezier(0.32, 0.72, 0, 1),
+        background-color 0.6s cubic-bezier(0.32, 0.72, 0, 1),
+        border-color 0.6s cubic-bezier(0.32, 0.72, 0, 1),
+        transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+      will-change: transform;
+    }
+
+    header.header-hidden { transform: translateY(-100%); }
+
+    header.header-scrolled {
+      padding: 1.1rem 4rem;
+      background: rgba(11, 10, 9, 0.82);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border-bottom-color: var(--border-subtle);
+    }
+
+    /* Gold scroll-progress hairline along the header's base */
+    .header-progress {
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 1px;
+      background: var(--accent-gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      opacity: 0.85;
+      pointer-events: none;
     }
 
     .brand-logo {
@@ -370,28 +401,47 @@
       text-transform: uppercase;
       color: var(--text-muted);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: color 0.4s ease;
       position: relative;
       font-weight: 400;
+    }
+
+    .nav-num {
+      font-size: 0.58rem;
+      margin-right: 0.45rem;
+      color: var(--text-muted);
+      transition: color 0.4s ease;
     }
 
     .nav-link::after {
       content: '';
       position: absolute;
-      bottom: -4px;
+      bottom: -5px;
       left: 0;
-      width: 0%;
+      width: 100%;
       height: 1px;
       background-color: var(--accent-gold);
-      transition: width 0.3s ease;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
     }
 
     .nav-link:hover {
       color: var(--text-cream);
     }
 
-    .nav-link:hover::after {
-      width: 100%;
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+    }
+
+    .nav-link.active { color: var(--text-cream); }
+
+    .nav-link.active .nav-num { color: var(--accent-gold); }
+
+    .nav-link:focus-visible {
+      outline: 1px solid var(--accent-gold);
+      outline-offset: 4px;
     }
 
     .header-actions {
@@ -404,17 +454,24 @@
       background: transparent;
       border: 1px solid var(--border-subtle);
       color: var(--text-cream);
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      padding: 0.6rem 1.2rem;
+      padding: 0.75rem 0.85rem;
       border-radius: 40px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      transition: all 0.3s ease;
+      transition: border-color 0.4s ease, background-color 0.4s ease;
     }
+
+    .sound-toggle-btn:hover { border-color: var(--border-gold); }
+
+    .sound-toggle-btn:focus-visible {
+      outline: 1px solid var(--accent-gold);
+      outline-offset: 4px;
+    }
+
+    /* Icon-only: the state lives in the bars and the aria-label */
+    .sound-state-label { display: none; }
 
     .sound-toggle-btn:hover {
       border-color: var(--accent-gold);
@@ -455,9 +512,24 @@
       color: var(--text-cream);
       text-decoration: none;
       padding: 0.6rem 1.4rem;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(197, 155, 39, 0.55);
+      background: rgba(197, 155, 39, 0.06);
       border-radius: 40px;
-      transition: all 0.3s ease;
+      transition:
+        background-color 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        border-color 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+        color 0.7s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .header-cta:hover {
+      background: var(--accent-gold);
+      border-color: var(--accent-gold);
+      color: var(--bg-dark);
+    }
+
+    .header-cta:focus-visible {
+      outline: 1px solid var(--accent-gold);
+      outline-offset: 4px;
     }
 
     .header-cta:hover {
@@ -2344,6 +2416,13 @@
       .menu-btn span { transition: none !important; }
     }
 
+    section[id] { scroll-margin-top: 90px; }
+
+    ::selection {
+      background: rgba(197, 155, 39, 0.35);
+      color: var(--text-cream);
+    }
+
     /* Fail-safe states when animation libraries fail to load */
     body.no-motion .custom-cursor { display: none; }
     body.no-motion .line-mask-inner { transform: none !important; }
@@ -2356,8 +2435,16 @@
       transform: none !important;
     }
 
+    @media (max-width: 1200px) {
+      header { padding: 2rem 2.5rem; }
+      header.header-scrolled { padding-left: 2.5rem; padding-right: 2.5rem; }
+      .nav-links { gap: 2.2rem; }
+      .brand-logo { font-size: 1.6rem; letter-spacing: 0.3em; }
+    }
+
     @media (max-width: 900px) {
       header { padding: 1.5rem 2rem; }
+      header.header-scrolled { padding: 0.9rem 2rem; }
       .nav-links { display: none; }
       .hero-content { max-width: 100%; }
       .hero-side-rail { display: none; }
@@ -2378,6 +2465,14 @@
       .cards-grid, .unboxing-grid, .ateliers-world-bar { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 3rem; align-items: flex-start; }
       .acquisition-drawer { max-width: 100%; }
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 1.1rem 1.25rem; }
+      header.header-scrolled { padding: 0.8rem 1.25rem; }
+      .sound-toggle-btn { display: none; }
+      .header-cta { padding: 0.5rem 1rem; font-size: 0.62rem; letter-spacing: 0.22em; }
+      .header-actions { gap: 0.8rem; }
     }
   </style>
 
@@ -2422,33 +2517,34 @@
   <div class="vignette-overlay"></div>
 
   <!-- Header Navigation -->
-  <header>
+  <header id="site-header">
     <a href="#" class="brand-logo magnetic-target">MERIDIAN</a>
     <ul class="nav-links">
-      <li><a href="#material" class="nav-link magnetic-target">01. LEATHER</a></li>
-      <li><a href="#architecture" class="nav-link magnetic-target">02. ARCHITECTURE</a></li>
-      <li><a href="#patina" class="nav-link magnetic-target">03. AGING</a></li>
-      <li><a href="#craft" class="nav-link magnetic-target">04. CRAFT</a></li>
-      <li><a href="#unboxing" class="nav-link magnetic-target">05. UNBOXING</a></li>
+      <li><a href="#material" class="nav-link magnetic-target" data-spy="material"><span class="nav-num">01.</span>LEATHER</a></li>
+      <li><a href="#architecture" class="nav-link magnetic-target" data-spy="architecture"><span class="nav-num">02.</span>ARCHITECTURE</a></li>
+      <li><a href="#patina" class="nav-link magnetic-target" data-spy="patina"><span class="nav-num">03.</span>AGING</a></li>
+      <li><a href="#craft" class="nav-link magnetic-target" data-spy="craft"><span class="nav-num">04.</span>CRAFT</a></li>
+      <li><a href="#unboxing" class="nav-link magnetic-target" data-spy="unboxing"><span class="nav-num">05.</span>UNBOXING</a></li>
     </ul>
 
     <div class="header-actions">
-      <button class="menu-btn magnetic-target" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span></span>
-        <span></span>
-      </button>
-
-      <button class="sound-toggle-btn magnetic-target" id="sound-toggle">
+      <button class="sound-toggle-btn magnetic-target" id="sound-toggle" aria-label="Toggle ambient sound" aria-pressed="false">
         <span class="sound-wave">
           <span class="sound-bar"></span>
           <span class="sound-bar"></span>
           <span class="sound-bar"></span>
         </span>
-        <span id="sound-state-label">SOUND: OFF</span>
+        <span class="sound-state-label" id="sound-state-label">SOUND: OFF</span>
       </button>
 
       <a href="#acquire" class="header-cta magnetic-target" id="header-reserve-btn">ACQUIRE NO. 1</a>
+      <button class="menu-btn magnetic-target" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span>
+        <span></span>
+      </button>
     </div>
+
+    <div class="header-progress" id="header-progress" aria-hidden="true"></div>
   </header>
 
   <!-- Mobile Navigation Overlay -->
@@ -3300,6 +3396,7 @@
       isSoundOn = !isSoundOn;
       soundToggle.classList.toggle('active', isSoundOn);
       soundLabel.textContent = isSoundOn ? 'SOUND: ON' : 'SOUND: OFF';
+      soundToggle.setAttribute('aria-pressed', String(isSoundOn));
 
       if (isSoundOn) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -3983,7 +4080,83 @@
       if (policyBackdrop.classList.contains('active')) closePolicy();
     });
 
-    // 17. Selection Persistence (finish, unit, monogram, foil)
+    // 17. Header state machine: frosted scrolled bar, hide-on-scroll-down, progress hairline
+    const siteHeader = document.getElementById('site-header');
+    const headerProgress = document.getElementById('header-progress');
+    const spyLinks = Array.from(document.querySelectorAll('.nav-link[data-spy]'));
+
+    let lastScrollY = window.scrollY;
+
+    function updateHeaderState() {
+      const y = window.scrollY;
+      siteHeader.classList.toggle('header-scrolled', y > 80);
+
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      headerProgress.style.transform = `scaleX(${maxScroll > 0 ? (y / maxScroll).toFixed(4) : 0})`;
+
+      if (y > lastScrollY && y > 420 && !mobileNav.classList.contains('active')) {
+        siteHeader.classList.add('header-hidden');
+      } else {
+        siteHeader.classList.remove('header-hidden');
+      }
+
+      lastScrollY = y;
+    }
+
+    window.addEventListener('scroll', updateHeaderState, { passive: true });
+    updateHeaderState();
+
+    // 17b. Scroll-spy: the active chapter's number turns gold
+    if (gsapLoaded) {
+      // Over the hero no chapter is current — clear the trail
+      const heroRegion = document.querySelector('.hero-section');
+      if (heroRegion) {
+        ScrollTrigger.create({
+          trigger: heroRegion,
+          start: 'top center',
+          end: 'bottom center',
+          onToggle: (self) => {
+            if (!self.isActive) return;
+            spyLinks.forEach(l => {
+              l.classList.remove('active');
+              l.removeAttribute('aria-current');
+            });
+          }
+        });
+      }
+
+      spyLinks.forEach(link => {
+        const section = document.getElementById(link.dataset.spy);
+        if (!section) return;
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onToggle: (self) => {
+            if (!self.isActive) return;
+            spyLinks.forEach(l => {
+              l.classList.remove('active');
+              l.removeAttribute('aria-current');
+            });
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'true');
+          }
+        });
+      });
+    }
+
+    // 17c. Desktop nav links ride Lenis like the mobile menu does
+    spyLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (lenis) {
+          e.preventDefault();
+          lenis.scrollTo(link.getAttribute('href'), { duration: 1.4 });
+        }
+      });
+    });
+
+    // 18. Selection Persistence (finish, unit, monogram, foil)
     function saveSelections() {
       try {
         const activeFinish = document.querySelector('.swatch-btn.active');
