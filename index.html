@@ -34,17 +34,84 @@
   </script>
 
   <!-- Premium Editorial Google Fonts: Instrument Serif, Bodoni Moda & Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Self-hosted fonts (vendored from Google Fonts, latin subset) -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/Instrument-Serif-normal.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/Instrument-Serif-italic.woff2">
 
   <!-- LCP image: start fetching before CSS/JS parse -->
   <link rel="preload" as="image" href="assets/hero.webp" fetchpriority="high">
 
-  <!-- Lenis CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+  <!-- Lenis CSS (vendored inline) -->
+  <style>
+    html.lenis,
+    html.lenis body {
+      height: auto;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    .lenis.lenis-smooth iframe {
+      pointer-events: none;
+    }
+  </style>
 
   <style>
+    /* Self-hosted font faces — latin subset */
+    @font-face {
+      font-family: 'Bodoni Moda';
+      font-style: normal;
+      font-weight: 400 800;
+      font-display: swap;
+      src: url(assets/fonts/Bodoni-Moda-normal.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: 'Bodoni Moda';
+      font-style: italic;
+      font-weight: 400 800;
+      font-display: swap;
+      src: url(assets/fonts/Bodoni-Moda-italic.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(assets/fonts/Instrument-Serif-normal.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url(assets/fonts/Instrument-Serif-italic.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: 'Plus Jakarta Sans';
+      font-style: normal;
+      font-weight: 200 700;
+      font-display: swap;
+      src: url(assets/fonts/Plus-Jakarta-Sans-normal.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
     :root {
       --bg-dark: #0b0a09;
       --bg-surface: #141311;
@@ -60,6 +127,29 @@
       --font-serif-hero: 'Instrument Serif', 'Bodoni Moda', Georgia, serif;
       --font-serif-display: 'Bodoni Moda', 'Instrument Serif', Georgia, serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    /* Keyboard users can jump past the nav and preloader chrome */
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 1rem;
+      z-index: 200000;
+      padding: 0.9rem 1.6rem;
+      background: var(--accent-gold);
+      color: var(--bg-dark);
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: top 0.3s ease;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
     }
 
     /* Reset & Base Styles */
@@ -1018,6 +1108,16 @@
     .patina-year-step {
       cursor: pointer;
       transition: color 0.3s ease;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+    }
+
+    .patina-year-step:focus-visible {
+      outline: 1px solid var(--accent-gold);
+      outline-offset: 3px;
     }
 
     .patina-year-step.active {
@@ -1309,12 +1409,14 @@
       backdrop-filter: blur(14px);
       z-index: 100000;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.4s ease, visibility 0.4s;
     }
 
     .drawer-backdrop.active {
       opacity: 1;
+      visibility: visible;
       pointer-events: all;
     }
 
@@ -1639,7 +1741,7 @@
       font-size: 1.1rem;
       letter-spacing: 0.3em;
       color: var(--text-muted);
-      opacity: 0.7;
+      opacity: 0.85;
     }
 
     /* TECHNICAL CARD / SPEC SECTION */
@@ -1957,11 +2059,12 @@
       justify-content: center;
       padding: 0 8vw;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+      transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1), visibility 0.5s;
     }
 
-    .mobile-nav.active { opacity: 1; pointer-events: all; }
+    .mobile-nav.active { opacity: 1; visibility: visible; pointer-events: all; }
 
     .mobile-nav-link {
       font-family: var(--font-serif-hero);
@@ -2038,11 +2141,12 @@
       justify-content: center;
       padding: 4vh 4vw;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.4s ease, visibility 0.4s;
     }
 
-    .policy-backdrop.active { opacity: 1; pointer-events: all; }
+    .policy-backdrop.active { opacity: 1; visibility: visible; pointer-events: all; }
 
     .policy-panel {
       background: var(--bg-surface);
@@ -2287,7 +2391,8 @@
     </style>
   </noscript>
 </head>
-<body>
+  <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <!-- Studio Preloader Overlay -->
   <div class="preloader" id="preloader">
@@ -2532,13 +2637,13 @@
         <div class="patina-controls">
           <div class="patina-slider-group">
             <span class="input-label">SCRUB DECADE PATINA TIMELINE:</span>
-            <input type="range" class="patina-range" id="patina-slider" min="0" max="3" step="1" value="0">
-            
+            <input type="range" class="patina-range" id="patina-slider" min="0" max="3" step="1" value="0" aria-label="Patina timeline: Day 1 to Year 10">
+
             <div class="patina-years-nav">
-              <span class="patina-year-step active" data-step="0">DAY 1</span>
-              <span class="patina-year-step" data-step="1">YEAR 1</span>
-              <span class="patina-year-step" data-step="2">YEAR 5</span>
-              <span class="patina-year-step" data-step="3">YEAR 10</span>
+              <button type="button" class="patina-year-step active" data-step="0">DAY 1</button>
+              <button type="button" class="patina-year-step" data-step="1">YEAR 1</button>
+              <button type="button" class="patina-year-step" data-step="2">YEAR 5</button>
+              <button type="button" class="patina-year-step" data-step="3">YEAR 10</button>
             </div>
           </div>
 
@@ -3034,10 +3139,10 @@
     </div>
   </div>
 
-  <!-- GSAP & Lenis Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  <!-- GSAP & Lenis Scripts (SRI-pinned) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js" integrity="sha384-0FwbSMlcCBgRZIAIN+i1xVrAbgrwSmKYej7zCCFlPpv50NGur87UfaeG1l13efmX" crossorigin="anonymous"></script>
 
   <script>
     // Register GSAP Plugins — guarded so a failed CDN cannot trap the page behind the preloader
@@ -3927,14 +4032,19 @@
       const now = new Date();
 
       const formatTime = (timeZone) => {
-        return new Intl.DateTimeFormat('en-US', {
+        const base = {
           timeZone,
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
-          hour12: false,
-          timeZoneName: 'shortOffset'
-        }).format(now);
+          hour12: false
+        };
+        try {
+          // shortOffset throws on older Safari — fall back to a bare time
+          return new Intl.DateTimeFormat('en-US', { ...base, timeZoneName: 'shortOffset' }).format(now);
+        } catch (err) {
+          return new Intl.DateTimeFormat('en-US', base).format(now);
+        }
       };
 
       document.getElementById('time-paris').textContent = formatTime('Europe/Paris');

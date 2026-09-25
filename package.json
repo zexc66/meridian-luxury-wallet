@@ -1,0 +1,13 @@
+{
+  "name": "meridian",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MERIDIAN — concept demo landing page (static, build-less). Runtime has no npm dependencies; this file exists for the Playwright smoke tests only.",
+  "scripts": {
+    "serve": "python -m http.server 8080",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}
